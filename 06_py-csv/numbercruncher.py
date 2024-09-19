@@ -31,4 +31,12 @@ def read_csv(csvfile):
         dic.popitem()
         return dic
     
-print(read_csv('occupations.csv'))
+def choose_random(csvfile):
+    data = read_csv(csvfile)
+    keys = [key for key in data.keys()]
+    random_num = random.random() * 99.8
+    for i in range(len(keys)):
+        if keys[i] > random_num:
+            return data[keys[i-1]]
+    
+print(choose_random('occupations.csv'))
