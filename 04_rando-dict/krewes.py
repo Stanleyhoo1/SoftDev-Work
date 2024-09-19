@@ -1,9 +1,9 @@
 # Stanley Hoo
 # UWSD
 # SoftDev
-# K04 -- Python dictionaries and random seleciton
+# K04 -- Python dictionaries and random selection
 # 2024-9-13
-#time spent: 0.5
+# time spent: 0.5
 
 import random
 
