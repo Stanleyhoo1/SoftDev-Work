@@ -1,5 +1,5 @@
 # Stanley Hoo
-# <TNPG>
+# UWSD
 # SoftDev
 # K04 -- Python dictionaries and random seleciton
 # 2024-9-13
