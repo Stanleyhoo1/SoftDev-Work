@@ -7,11 +7,17 @@
 
 '''
 DISCO:
+random.choice()
+next() readds nextline in csvfile
+how to import csv
+pop last item added in a dictionary
 ...
 QCC:
+None
 ...
 HOW THIS SCRIPT WORKS: We first read from the csv file, storing the information in a dictionary with the key as the percent incremented
-over time and the value is the occupation 
+over time and the value is the occupation. We assigned each occupation a range. We then generated a random number from 0 to 99.8 (total percent)
+and returned the occupation that fell into the range of that occupation.
 ...
 '''
 
