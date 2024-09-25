@@ -1,35 +1,23 @@
 # Stanley Hoo
-# UWSD
+# 63
 # SoftDev
 # K09 -- Serve
-# 2024-9-23
+# 2024-09-23
 # time spent: 0.5
+
+'''
+DISCO:
+Plug in 06 function to the helloworld
+
+QCC:
+0. 
+'''
+
+
+from flask import Flask
 
 import csv
 import random
-from flask import Flask
-
-app = Flask(__name__)
-
-template = '''
-<!DOCTYPE html>
-    <html lang="en">
-    <meta charset="UTF-8">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="">
-    <style>
-    </style>
-    <script src=""></script>
-    <body>
-        <div class="">
-            <h1></h1>
-            <p></p>
-        </div>
-    </body>
-</html> 
-'''
-
 
 with open("occupations.csv", newline="") as csvfile:
     #creates a dictionary for every row that can be parsed through
@@ -38,19 +26,36 @@ with open("occupations.csv", newline="") as csvfile:
     percents = []
     for row in reader:
         jobs.append(row['Job Class']), percents.append(float(row['Percentage']))
+        
+def RandomManual():
+    # find a valid percentage, subtract percents until random <=0 and we can return the corresponding jobs
+    rand = random.random() * percents[-1]
+    for i in range(len(percents)):
+        rand -= percents[i]
+        if rand <= 0:
+            return jobs[i]
 
-def ReturnRandom():
-# random.choices returns a list, [:-1] to ignore last row, k is returned list size
-    return (random.choices(jobs[:-1], weights=percents[:-1], k=1)[0])
+def htmlOut():
+    output = "<h1>63</h1>\n"
+    output += "<p>Period 4</p>\n"
+    output += f"<p>{RandomManual()}</p>\n"
+    output += "<ul>"
+    for job in jobs[:-1]:
+        output += "\t <li>"
+        output += job
+        output += "</li> \n"
+    output += "</ul> \n"
+    return output
 
-@app.route("/")   
-def random_occupation():
-    return ReturnRandom()
 
-@app.route("/")  
-def print_occupations():
-    return jobs
+app = Flask(__name__)        
 
-if __name__ == "__main__":      # true if this file NOT imported
-    app.debug = True            # enable auto-reload upon code change
-    app.run()
+@app.route("/")                         
+def hello_world():
+    print(__name__)                  
+    return htmlOut()           
+
+app.debug = True
+app.run()                                
+
+
