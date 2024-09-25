@@ -1,6 +1,9 @@
-# Clyde 'Thluffy' Sinclair
+# Stanley Hoo
+# 63
 # SoftDev
-# September 2024
+# K09 -- Serve
+# 2024-09-23
+# v1 removes print(__name__)
 
 from flask import Flask
 app = Flask(__name__)            #create instance of class Flask
