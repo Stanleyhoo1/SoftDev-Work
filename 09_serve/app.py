@@ -36,7 +36,7 @@ def RandomManual():
             return jobs[i]
 
 def htmlOut():
-    output = "<h1>63</h1>\n"
+    output = "<h1>Team Name: 63 - Roster: Stanley Hoo, Jady Lei, Nia Lam</h1>\n"
     output += "<p>Period 4</p>\n"
     output += f"<p>{RandomManual()}</p>\n"
     output += "<ul>"
