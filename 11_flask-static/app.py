@@ -24,7 +24,7 @@ def h():
     print(__name__)
     return str(random.random())
 
-@app.route("/")
+@app.route("/fixie")
 def serve_fixie():
     print("The __name__ of this module is...")
     print(__name__)
