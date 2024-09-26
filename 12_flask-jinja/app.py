@@ -1,6 +1,9 @@
-# Clyde 'Thluffy' Sinclair
+# Stanley Hoo, Tahmim Hassan, Leon Huang
+# UWSD
 # SoftDev
-# Sep 2024
+# K11 -- Some things Never Change
+# 2024-09-26
+# time spent: 0.5
 
 """
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
