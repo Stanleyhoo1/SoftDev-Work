@@ -1,7 +1,7 @@
-# Stanley Hoo, Tahmim Hassan, Leon Huang
-# UWSD
+# Stanley Hoo, Alex Luo, Ryan Zhou
+# QSA
 # SoftDev
-# K11 -- Some things Never Change
+# K12 -- Just Plug It In
 # 2024-09-26
 # time spent: 0.5
 
@@ -34,7 +34,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "No hablo queso!"
+    return "No hablo queso!" + "<a href='/my_foist_template'> Template </a>"
 
 coll = [0,1,1,2,3,5,8]
 
