@@ -1,4 +1,4 @@
-# Stanley Hoo, Alex Luo, Ryan Zhou
+# Stanley Hoo
 # Wild Blasters
 # SoftDev
 # K13 -- Template for Success
@@ -11,21 +11,28 @@ app = Flask(__name__)
 import csv
 import random
 
-with open("data/occupations.csv", newline="") as csvfile:
-    #creates a dictionary for every row that can be parsed through
-    reader = csv.DictReader(csvfile)
-    jobs = []
-    percents = []
-    for row in reader:
-        jobs.append(row['Job Class']), percents.append(float(row['Percentage']))
+def read_csv(csvfile):
+    with open(csvfile, newline='') as csv_file:
+        header = next(csv_file)
+        content = csv.reader(csv_file)
+        dic = {}
+        for row in content:
+            percent = round(float(row[1]), 1)
+            dic[row[0]] = percent
+
+        dic.popitem()
+        return dic
+    
+def choose_random(csvfile):
+    data = read_csv(csvfile)
+    jobs = [key for key in data.keys()]
+    percents = [value for value in data.values()]
+    percents.sort()
+    return ReturnRandom(jobs, percents), data
         
-def RandomManual():
-    # find a valid percentage, subtract percents until random <=0 and we can return the corresponding jobs
-    rand = random.random() * percents[-1]
-    for i in range(len(percents)):
-        rand -= percents[i]
-        if rand <= 0:
-            return jobs[i]
+def ReturnRandom(jobs, percents):
+# random.choices returns a list, [:-1] to ignore last row, k is returned list size
+    return (random.choices(jobs[:-1], weights=percents[:-1], k=1)[0])
         
         
 html_website = '''
@@ -59,7 +66,7 @@ def make_table(lists):
     tbody = ""
     #using the stats shell, it replaces each of them with the pokemon's actual stats, also if there is no 2nd type it puts none
     for i in lists:
-        tbody += "<tr>" + i + "</tr>\n\t</tr>\n\t"
+        tbody += "<tr><td>" + i + "</td></tr>\n\t"
     html_table = html_table.replace("_TBODY_", tbody[:-2])
     return html_table
 
@@ -69,8 +76,9 @@ def htmlOut(template):
     template = template.replace("TITLE", "Template for Success\n")
     body = ''
     body += "<p>Period 4</p>\n"
-    body += f"<p>{RandomManual()}</p>\n"
-    body += make_table(jobs)
+    random_job, data = choose_random('data/occupations.csv')
+    body += f"<p>{random_job}</p>\n"
+    body += make_table([key for key in data.keys()])
     template = template.replace("BODY", body)
     return template    
 
