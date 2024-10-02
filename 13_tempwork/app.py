@@ -3,7 +3,7 @@
 # SoftDev
 # K13 -- Template for Success
 # 2024-09-30
-# time spent: 0.5
+# time spent: 1.5
 
 from flask import Flask, render_template
 app = Flask(__name__)    
