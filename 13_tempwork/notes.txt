@@ -1,0 +1,6 @@
+Notes:
+- homepage not needed
+- can create an html page stored in templates folder then render it using render_template under the same route
+- Always write html code with html templates
+
+EGO:
