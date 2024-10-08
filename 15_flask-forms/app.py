@@ -1,9 +1,9 @@
 # Stanley Hoo, Leon Huang, Tahmim Hassan
 # UWSD
 # SoftDev
-# K14 -- Who do forms work for?
-# 2024-10-7
-# time spent: 1.5
+# K15 -- Take and Give
+# 2024-10-8
+# time spent: 0.5
 
 # import conventions:
 # list most general first (standard python library)
@@ -14,33 +14,27 @@ from flask import Flask             #facilitate flask webserving
 from flask import render_template   #facilitate jinja templating
 from flask import request           #facilitate form submission
 
-import testmod0
-
 #the conventional way:
 from flask import Flask, render_template, request
 
 app = Flask(__name__)    #create Flask object
 
 
-'''
-trioTASK:
-~~~~~~~~~~~ BEFORE RUNNING THIS, ~~~~~~~~~~~~~~~~~~
-...read for understanding all of the code below.
- * Some will work as written;
- *  ...other sections will not. 
-
-TASK:
- Predict which.
- 1. Devise simple tests to isolate components/behaviors.
- 2. Execute your tests.
- 3. Process results.
- 4. Findings yield new ideas for more tests? Yes: do them.
-
-PROTIP: Insert your own in-line comments
- wherever they will help
-  your future self and/or current teammates
-   understand what is going on.
-'''
+html_website = '''
+<!DOCTYPE html>
+    <head>
+        <title>
+            TITLE
+        </title>
+        <style>
+        STYLE
+        </style>
+        HEADER
+    </head>
+    <body>
+        BODY
+    </body>
+</html>'''
 
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
@@ -73,9 +67,23 @@ def authenticate():
 #     print(request.headers)
     return "Waaaa hooo HAAAH"  #response to a form submission
 
+def htmlOut(template):
+    template = template.replace("HEADER", "<h1></h1>\n")
+    template = template.replace("TITLE", "Template for Success\n")
+    body = ''
+    body += "<p>Period 4</p>\n"
+    random_job, data = choose_random('data/occupations.csv')
+    body += f"<p>{random_job}</p>\n"
+    body += make_table([key for key in data.keys()], data)
+    template = template.replace("BODY", body)
+    html_file = open("templates/response.html", "w")
+    print(template, file=html_file)
+    html_file.close()
+    return template
 
     
 if __name__ == "__main__": #false if this file imported as module
     #enable debugging, auto-restarting of server when this file is modified
     app.debug = True 
     app.run()
+
