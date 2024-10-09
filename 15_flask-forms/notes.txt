@@ -1,0 +1,3 @@
+GET requests are used to retrieve data and send parameters in the URL.
+
+POST requests are used to send data within the request body, making them more secure for sensitive data.
