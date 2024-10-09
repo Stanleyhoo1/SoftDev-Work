@@ -26,7 +26,7 @@ def disp_loginpage():
 @app.route("/auth", methods=['GET', 'POST'])
 def authenticate():
     # Capture user input and request method
-    username = request.form.get("username") if request.method == "POST" else request.args.get("username")
+    username = request.args['username']
     method_used = request.method
     greeting = f"Hello, {username}!" if username else "Hello!"
 
