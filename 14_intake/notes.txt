@@ -1,0 +1,50 @@
+# Stanley Hoo, Leon Huang, Tahmim Hassan
+# UWSD
+# SoftDev
+# K14 -- Who do forms work for?
+# 2024-10-7
+# time spent: 1.5
+
+DISCO:
+* Code doesn't work when we uncomment everything
+* request.headers prints "
+Host: 127.0.0.1:5000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br, zstd
+Connection: keep-alive
+Referer: http://127.0.0.1:5000/
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Priority: u=0, i" in terminal
+* Cannot have both request.headers and request.auth uncommented at the same time
+* request.args prints "ImmutableMultiDict([])
+127.0.0.1 - - [08/Oct/2024 10:30:52] "GET / HTTP/1.1" 200 -
+ImmutableMultiDict([('username', 'asas'), ('sub1', 'Submit Query')])
+127.0.0.1 - - [08/Oct/2024 10:30:54] "GET /auth?username=asas&sub1=Submit+Query HTTP/1.1" 200" in the terminal
+-----------------------------------------------------------------------
+
+
+Q/C/C:
+* Why do we get an error for username when uncommenting "print(request.args['username'])"?
+* 
+* 
+-----------------------------------------------------------------------
+
+
+OTHER?
+* 
+* 
+* 
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
