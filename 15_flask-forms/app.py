@@ -3,6 +3,7 @@
 # SoftDev
 # K15 -- Take and Give
 # 2024-10-08
+# Time spent: 1.5h
 
 from flask import Flask, render_template, request
 
