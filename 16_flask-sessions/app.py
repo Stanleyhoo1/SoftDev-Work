@@ -28,31 +28,32 @@ def index():
 def login():
     if request.method == 'POST':
         password = request.form['password']
-        if password==app.secret_key:
-            flash('Login successful!', 'success')
-            session['username'] = request.form['username']
-            password = request.form['password']
-            return redirect(url_for('/'))
-        else:
-            flash('Incorrect username or password', 'success')
-    return render_template('login.html', header=header)
+        print(request.cookies.get('username'), username)
+        session['username'] = request.form['username']
+        return redirect(url_for('index'))
+#         if password==app.secret_key:
+#             flash('Login successful!', 'success')
+#             session['username'] = request.form['username']
+#             password = request.form['password']
+#             return redirect(url_for('/'))
+#         else:
+#             flash('Incorrect username or password', 'success')
+    else:
+        return render_template('login.html', header=header)
 
 @app.route("/auth", methods=['GET', 'POST'])
 def authenticate():
-    # Capture user input and request method
-    username = ""
-    if request.method == 'POST':
-        password = request.args['password']
-        if password==app.secret_key:
-            flash('Login successful!', 'success')
-            username = request.args['username']
-            session['username'] = username
-            password = request.args['password']
-            return redirect(url_for('/'))
-        else:
-            flash('Incorrect username or password', 'success')
+    
+    print(request.cookies.get('username'), 'username')
+    session['username'] = request.form['username']
+    if 'username' in session:
+        message = f'Logged in as {session["username"]}'
+    else:
+        message = 'You are not logged in'
+    username = request.args['username']
     method_used = request.method
     greeting = f"Hello, {username}!" if username else "Hello!"
+    greeting += " " + message
     return render_template(
         'response.html',
         username=username,
@@ -65,8 +66,9 @@ def authenticate():
 @app.route('/logout')
 def logout():
     # remove the username from the session if it's there
+    username = request.args['username']
     session.pop('username', None)
-    return redirect(url_for('index'))
+    return render_template('logout.html', header=header, username=username)
 
 if __name__ == "__main__":
     app.debug = True
