@@ -1,0 +1,24 @@
+body{
+      background-color: rgb(100,100,100)
+    }
+      h1 {
+        color: white;
+        text-align: center;
+        padding: 5px;
+        background-color: rgb(190, 190, 190)
+      }
+      #list{
+        color:white;
+        text-align: left;
+      }
+      .main{
+        margin-left: 200px;
+    }
+    h2{
+        margin-top:-125px
+    }
+
+    h3{
+        margin-left: 5px;
+        width: 100px;
+    }
