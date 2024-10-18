@@ -1,7 +1,9 @@
-#Clyde "Thluffy" Sinclair
-#SoftDev
-#skeleton/stub :: SQLITE3 BASICS
-#Oct 2024
+# Stanley Hoo, Alex Luo, Tahmim Hassan
+# UWSD
+# SoftDev
+# K19 -- All Your Database Are Belong To Us
+# 2024-10-18
+# Time spent: 1h
 
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitate CSV I/O
@@ -16,12 +18,22 @@ with open('students.csv', newline='') as csvfile:
 
         students.append(((row['name'], row['age'], row['id'])))
         
+courses = []
+
+with open('courses.csv', newline='') as csvfile:
+
+    reader = csv.DictReader(csvfile)
+
+    for row in reader:
+
+        courses.append(((row['code'], row['mark'], row['id'])))
+        
         
         
 DB_FILE="discobandit.db"
 
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+conn = sqlite3.connect(DB_FILE)
+cur = conn.cursor()
 
 #==========================================================
 
@@ -33,7 +45,6 @@ c = db.cursor()               #facilitate db ops -- you will use cursor to trigg
 """
 
 
-
 command = '''
     CREATE TABLE IF NOT EXISTS students (
         name TEXT NOT NULL UNIQUE,
@@ -43,13 +54,26 @@ command = '''
 '''
 
 # test SQL stmt in sqlite3 shell, save as string
-c.execute(command)    # run SQL statement
+cur.execute(command)    # run SQL statement
 
 for student in students:
     name, age, id_num = student
-    c.execute("INSERT INTO students (name, age, id) VALUES (?, ?, ?)", (name, age, id_num))
+    cur.execute("INSERT INTO students (name, age, id) VALUES (?, ?, ?)", (name, age, id_num))
 
+# Create the users table if it doesn't already exist
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS courses (
+        code TEXT NOT NULL,
+        mark INT,
+        id INT NOT NULL
+    );
+''')
+
+for course in courses:
+    code, mark, id_num = course
+    cur.execute("INSERT INTO courses (code, mark, id) VALUES (?, ?, ?)", (code, mark, id_num))
+    
 #==========================================================
 
-db.commit() #save changes
-db.close()  #close database
+conn.commit() #save changes
+conn.close()  #close database

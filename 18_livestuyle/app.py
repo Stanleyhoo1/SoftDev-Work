@@ -1,10 +1,10 @@
 
-    # Stanley Hoo, Leon Huang, Tahmim Hassan
-    # UWSD
-    # SoftDev
-    # K18 -- Serving Looks
-    # 2024-10-16
-    # Time spent: .5h
+# Stanley Hoo, Leon Huang, Tahmim Hassan
+# UWSD
+# SoftDev
+# K18 -- Serving Looks
+# 2024-10-16
+# Time spent: .5h
  
 from flask import Flask, render_template, request, session, redirect
 import os
