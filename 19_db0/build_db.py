@@ -1,4 +1,4 @@
-# Stanley Hoo, Alex Luo, Tahmim Hassan
+# Stanley Hoo, Alex Luo, Tahmim Hassan, Leon Huang
 # UWSD
 # SoftDev
 # K19 -- All Your Database Are Belong To Us
