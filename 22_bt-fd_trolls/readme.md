@@ -16,3 +16,4 @@ source: https://getbootstrap.com/docs/5.3/getting-started/contribute/
 tailwind: 0
 
 q1:
+I prefer tailwind the best because styling wise it looks the best and it is also really easy to use. Foundations is really cool with the grid layout, but I feel like the aesthetics are lacking a little bit. Bootstrap was by far the worst, not very pretty and hard to figure out on my own.
