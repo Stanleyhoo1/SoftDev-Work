@@ -5,3 +5,72 @@
 # K22: Testing On-Ramps + Other FEFs
 # 2024-11-19
 # Time spent: 1h-->
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            plugins: [require('@tailwindcss/typography')]
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans leading-relaxed">
+    <header class="bg-blue-500 text-white text-center py-6">
+        <h1 class="text-3xl font-bold">Tailwind Test</h1>
+        <p class="text-lg">Food</p>
+    </header>
+    <main class="max-w-6xl mx-auto my-8 p-4">
+            <section class="mb-6">
+                <p class="text-gray-700 my-2"> I like to eat food. My favorite cuisines are Japanese, Italian, and Chinese.
+                </p>
+            </section>
+            <section class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Japanese</h2>
+                <div class="bg-gray-200 p-4 rounded">
+                    <div class="text-center text-blue-500 font-bold text-lg">Japanese food is the highest quality and is very fresh. I love sushi, ramen, tempura, etc.</div>
+                </div>
+            </section>
+            <section class="mb-6">
+                <h2 class="text-2x2 font-semibold text-gray-800">Italian</h2>
+                <p class="text-gray-700 my-2">
+                    I also love Italian food. Pasta is my favorite, and I also love pizza and you can't forget about the fried calamari.
+                </p>
+                <div class="flex flex-col md:flex-row items-center bg-gray-200 p-4 rounded">
+                    <!-- can change shade of blue and box size -->
+                    <div class="p-4 text-center bg-blue-100 m-2 rounded">Block 1</div>
+                    <div class="p-7 text-center bg-blue-800 m-2 corner">Block 2</div>
+                    <div class="p-4 text-center bg-blue-600 m-2 rounded">Block 3</div>
+                </div>
+            </section>
+            <section class="mb-6">
+                <!-- changing numbers here changes the text size -->
+                <h2 class="text-2xl font-semibold text-gray-800">Chinese</h2>
+                <!-- text-gray changes opacity -->
+                <p class="text-gray-300 my-2">
+                    Authentic Chinese food is also very nice. I particularly love dumplings and noodles.
+                </p>
+                <button class="px-6 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-600 transition duration-300">
+                    Click me!
+                </button>
+            </section>
+            <section class="mb-6">
+                <h2 class="text-2xl font-semibold text-gray-900">Conclusion</h2>
+                <p class="text-gray-700 my-2">
+                    Food is very tasty
+                </p>
+                <div class="bg-purple-100 text-purple-800 p-4 rounded">
+                    put plugin here
+                </div>
+            </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-200 text-left py-4">
+        <p>@Hookose</p>
+    </footer>
+</body>
+</html>
