@@ -29,9 +29,9 @@ def home():
 #     print(data)
     # Get the data and insert into the website
     for i in range(len(data['photos'])):
-        content += f'<img src={data['photos'][i]['img_src']}><br>'
-        content += f'<p>Mars Rover {data['photos'][i]['camera']['full_name']}</p>'
-    return render_template('main.html', TNPG=TNPG, roster=roster, content=content)  
+        content += f"<img src={data['photos'][i]['img_src']}><br>"
+        content += f"<p>Mars Rover {data['photos'][i]['camera']['full_name']}</p>"
+    return render_template('main.html', TNPG=TNPG, roster=roster, content=content)
 
 if __name__ == "__main__":
     app.debug = True
