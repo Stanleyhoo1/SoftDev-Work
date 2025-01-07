@@ -1,0 +1,2 @@
+console.log() to print stuff in console
+basically java but with some slight differences

@@ -1,5 +1,5 @@
-//Team Phantom Tollbooth :: Clyde Sinclair, Fierce Dragon
-//SoftDev pd0
+//Team Grizzly :: Alex Luo, Stanley Hoo
+//SoftDev pd4
 //K27 - Basic functions in JavaScript
 //2025-01-06m
 
