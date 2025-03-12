@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Your Contributions</h1>
+  <ul>
+    {% for edit in edits %}
+      <li>
+        <a href="{{ url_for('story', story_id=edit.story.id) }}">{{ edit.story.title }}</a>
+        <p>{{ edit.body[:100] }}...</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
