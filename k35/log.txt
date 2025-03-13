@@ -1,3 +1,10 @@
+# Stanley Hoo
+# Master Oogway
+# SoftDev
+# K35: Now Again For The First Time
+# 2025-03-13
+# Time spent: 4h
+
 DISCO:
 Must give Copilot tasks in small chunks, break it up into easier tasks it can complete instead of one big, complex task it will mess up.
 Be very specific with instructions.
