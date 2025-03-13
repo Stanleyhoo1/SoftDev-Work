@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Story</title>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <h1>Create New Story</h1>
+    <form method="POST" action="{{ url_for('create_story') }}">
+        <label for="title">Title:</label><br>
+        <input type="text" name="title" required><br><br>
+        <label for="content">Content:</label><br>
+        <textarea name="content" rows="10" cols="50" required></textarea><br><br>
+        <button type="submit">Create Story</button>
+    </form>
+    {% endblock %}
+</body>
+</html>

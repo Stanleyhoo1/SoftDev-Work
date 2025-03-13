@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stories In Progress - Story Blog</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+  <h1>Stories In Progress</h1>
+  <div>
+    {% for story in stories %}
+      <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+         <h2>{{ story.title }}</h2>
+         {% set last_edit = story.edits|sort(attribute='timestamp', reverse=true)|first %}
+         {% if last_edit %}
+             <p>{{ last_edit.content[:150] ~ ('...' if last_edit.content|length > 150 else '') }}</p>
+         {% else %}
+             <p>No content yet.</p>
+         {% endif %}
+         <a href="{{ url_for('story_detail', story_id=story.id) }}"><button>View</button></a>
+         {% if current_user.is_authenticated and not has_contributed(story, current_user) %}
+             <a href="{{ url_for('contribute_story', story_id=story.id) }}"><button>Contribute</button></a>
+         {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+</body>
+</html>

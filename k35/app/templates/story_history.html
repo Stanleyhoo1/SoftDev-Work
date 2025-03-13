@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Edit History</title>
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+  <h1>Full Edit History for: {{ story.title }}</h1>
+  {% if edits %}
+    <ul>
+    {% for edit in edits %}
+      <li>
+         <strong>{{ edit.timestamp }}</strong>: {{ edit.content }}
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No edits available.</p>
+  {% endif %}
+{% endblock %}
+</body>
+</html>

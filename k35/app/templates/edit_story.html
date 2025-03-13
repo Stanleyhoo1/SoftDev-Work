@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Edit Story: {{ story.title }}</h1>
+<form method="POST">
+    <textarea name="edit_content" rows="10" cols="50" placeholder="Enter your edit here..."></textarea><br>
+    <button type="submit" name="action" value="save">Save Edit</button>
+    <button type="submit" name="action" value="complete">Save and Complete Story</button>
+</form>
+{% endblock %}
