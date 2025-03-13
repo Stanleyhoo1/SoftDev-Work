@@ -1,69 +1,102 @@
-# Story Blog Website
+# Story Blog - StoryMagic
 
-This is a Flask application for a story blog website where users can write and share their stories.
+Welcome to **Story Blog - StoryMagic**, a magical storytelling platform where users collaboratively create, contribute to, and complete enchanting stories. Our platform features a unique, earthy design with decorative fonts, text shadows, and organic textures that evoke a timeless, mystical ambiance.
 
 ## Features
 
-- User registration and authentication
-- CRUD operations for stories
-- Commenting on stories
-- User profiles
+- **User Authentication**: 
+  - Register, log in, and log out securely.
+- **Unique Story Titles**:
+  - Prevent duplicate titles to ensure every story stands out.
+- **Collaborative Story Creation**:
+  - Create new stories and contribute to existing ones.
+- **Edit History**:
+  - View full edits for each story, preserving all formatting (spaces, newlines, tabs).
+- **Original Creator Controls**:
+  - Only the story creator can update the story title via a dedicated interface.
+- **Magical Themed UI**:
+  - Enjoy a consistent, magical theme throughout the site with decorative fonts, earthy colors, and subtle text shadows.
+- **Team Flag**:
+  - Proudly display our custom team flag component representing *Team StoryMagic*.
 
-## Setup
+## Technologies
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/story-blog.git
-    cd story-blog
-    ```
+- **Backend**: Python with Flask
+- **Database**: SQLite (auto-initializes tables if they don't exist)
+- **User Authentication**: Flask-Login
+- **Frontend**: HTML, CSS, and Jinja2 templating with a cohesive magical design
 
-2. Create a virtual environment and activate it:
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
+## Installation
 
-3. Install the dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+1. **Clone the Repository**
 
-4. Set up the database:
-    ```bash
-    flask db init
-    flask db migrate -m "Initial migration."
-    flask db upgrade
-    ```
+   ```bash
+   git clone https://github.com/Stanleyhoo1/story-blog.git
+   cd story-blog
+   ```
 
-5. Run the application:
-    ```bash
-    flask run
-    ```
+2. **Create a Virtual Environment and Install Dependencies**
 
-## Project Structure
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pip install -r requirements.txt
+   ```
 
-```
-story-blog/
-    ├── app/
-    │   ├── __init__.py
-    │   ├── models.py
-    │   ├── routes.py
-    │   ├── static/
-    │   ├── templates/
-    │   └── forms.py
-    ├── migrations/
-    ├── venv/
-    ├── .env
-    ├── config.py
-    ├── requirements.txt
-    ├── run.py
-    └── README.md
-```
+3. **Run the Application**
 
-## Deployment
+   ```bash
+   flask run
+   ```
 
-Instructions for deploying the application will go here.
+   The application uses `stories.db` as its SQLite database. On every request, the necessary database tables will be created if they do not already exist.
+
+## Usage
+
+1. **User Registration & Login**
+   - Register a new account or log in with your credentials.
+   
+2. **Story Creation**
+   - Click on **Create New Story**.
+   - Enter a unique title and initial content to start your story.
+   
+3. **Contributing to Stories**
+   - Browse stories on the homepage, in-progress, or contributions sections.
+   - Click on **Contribute** for any story you haven’t contributed to yet.
+   
+4. **Viewing Stories**
+   - Click on a story to view its content.
+   - For completed stories, view the entire formatted content (with preserved spacing and newlines), edit history, and list of contributors.
+   - If you are the story's original creator, an **Edit Title** button is provided for renaming the story.
+
+5. **Team Flag Feature**
+   - Our custom team flag is displayed on the site, symbolizing our commitment to creative collaboration and magical storytelling.
+
+## File Structure
+
+- `app/__init__.py`  
+  The main Flask application file containing routes for authentication, story management, and database initialization.
+  
+- `app/templates/`  
+  Contains all HTML/Jinja2 templates:
+  - `base.html`: Main base template.
+  - `home.html`, `in_progress.html`, `completed_stories.html`, etc.: Templates for different pages.
+  - `story_detail.html`: Template for viewing a story with preserved formatting.
+  - `edit_story_title.html`: Template for editing a story title (accessible only by the creator).
+  - `teamflag.html`: Reusable component for displaying the team flag.
+  
+- `app/static/`  
+  Houses static files:
+  - `styles.css`: Magical, earthy-themed CSS styles.
+  - `images/`: Directory containing images such as the team flag image (`teamflag.png`).
+  
+- `schema.sql`  
+  SQL file defining the database schema for `users`, `stories`, and `edits` with appropriate constraints.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
 
 ## License
 
-This project is licensed under the MIT License.
+Distributed under the MIT License. See the `LICENSE` file for more information.
