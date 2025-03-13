@@ -631,6 +631,7 @@ v1
     <title>{{ story.title }} - Story Detail</title>
 
 templates/contribute_story.html
+v1
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1128,9 +1129,915 @@ Below is an example of the missing template file. Add a file named "edit_history
 
 
 templates/edit_history.html
+v1
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ story.title }} - Edit History</title>
 After adding this file to your templates folder, the error should be resolved.
+
+I don't see the css styling anywhere. There should be a main style.css file that is just imported to all of the html pages. 
+Below is an example of a main CSS file. Save this file as "static/styles.css". Then ensure all of your HTML templates reference this file using the standard Flask url_for syntax (e.g. in your base.html, include:
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+Below is the CSS file:
+
+
+static/styles.css
+v1
+/* Global body styling */
+body {
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+Now, ensure that each HTML template (especially your base.html) references this CSS file by including a link in the head section like so:
+
+
+templates/base.html
+v9
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+This "static/styles.css" file provides your main styling including flash messages, navbar, completed story view, and edit history styling. Adjust and experiment with the CSS as desired to further match your story-themed design!
+
+The navbar and login container disappeared, I also want the webpage to be more story themed. Perhaps have a book background or something idk. Buttons should look more pleasing with suitable colors, when hovering on buttons they should slightly change color and when hovering on view window it should pop out a bit, also maybe add a shadow for it and rounded edges and better looking border, perhaps a vine border or branches.
+Below are updated code examples with a more story-themed design. In these examples, we've updated the main CSS file ("static/styles.css") with:
+
+• A background image similar to an old book or parchment.
+• A styled navbar and login container that remain visible.
+• Buttons styled with pleasing colors and a hover effect.
+• The view window (and other cards) now have a shadow, rounded edges, and a decorative border (inspired by vines/branches).
+
+Also, the base.html file references the external CSS file so that the navbar and login container appear on every page.
+
+Below are the file examples:
+
+
+templates/base.html
+v10
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+
+static/styles.css
+v2
+/* Global Styles and Story-Themed Background */
+body {
+  background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), #fdf6e3;
+  background-size: cover;
+  margin: 0;
+In the above examples:
+
+The base.html file now loads the stylesheet from static/styles.css.
+The CSS file uses a combination of a subtle parchment background and a wood-texture border image (from Transparent Textures) to give a storybook feel.
+Buttons have a hover effect with a color change and a slight scale-up.
+Cards (for story previews and the view window) have a drop shadow, rounded corners, and a decorative vine/wood border effect.
+The login container and navbar are fixed or styled so they always remain visible.
+Feel free to adjust image URLs and colors to further fine-tune the story theme!
+
+For the view history page, there should be a way to go back to the main site more easily instead of having to scroll all the way down. Also I want the background of the site to have more of a magical nature theme. Style the view history, view, and contribute buttons to match the theme accordingly. The borders of the preview view window should also have this nature style theme, try to make the border branches or vines or something along those lines.
+Below are the updated files with the requested changes:
+
+Updated base.html
+
+templates/base.html
+v11
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+ Public code references from 7 repositories
+Updated CSS file: styles.css
+
+static/styles.css
+v3
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'), #faf3e0;
+  background-size: cover;
+  margin: 0;
+Updated edit_history.html
+
+templates/edit_history.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Edit History</title>
+ Public code references from 1 repository
+Updated completed_story_view.html
+
+templates/completed_story_view.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Story</title>
+ Public code references from 1 repository
+Updated contribute_story.html
+
+templates/contribute_story.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contribute to {{ story.title }}</title>
+ Public code references from 1 repository
+Updated story_detail.html
+
+templates/story_detail.html
+v4
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+ Public code references from 1 repository
+Updated home.html
+
+templates/home.html
+v4
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Story Blog</title>
+ Public code references from 1 repository
+These changes include:
+
+Updated CSS for a magical nature-themed background and styled buttons.
+Navbar and login container are properly styled and visible.
+Buttons have a hover effect and match the theme.
+View windows and cards have rounded edges, shadows, and a decorative border.
+A "Back to Main Site" button at the top of the edit history page for easier navigation.
+Feel free to tweak the CSS further to better match your vision!
+
+apply the homepage style to all pages. Also the navbar disappears for all of the view/edit pages now
+2/2
+2/2
+Below are updated versions of your template files. In these updates, we've moved your homepage style—including the navbar, login container, background image, and overall styling—into the base file so every page that extends base.html will automatically inherit the same look. Make sure that all your view/edit pages now extend base.html and place their content inside the {% block content %}.
+
+Below are the updated files:
+
+
+templates/base.html
+v12
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+Below is your updated CSS file so that the magical nature homepage style is applied everywhere:
+
+
+static/styles.css
+v4
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'), #faf3e0;
+  background-size: cover;
+  margin: 0;
+Now, please ensure every page extends base.html. Here are some examples:
+
+
+templates/home.html
+v5
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Story Blog</title>
+
+templates/story_detail.html
+v5
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+
+templates/edit_history.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Edit History</title>
+
+templates/completed_story_view.html
+v4
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Story</title>
+
+templates/contribute_story.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contribute to {{ story.title }}</title>
+By ensuring every page extends base.html, the navbar, login container, and homepage style will be applied to all pages. This should fix the disappearing navbar issue on view/edit pages. Adjust the CSS and markup as needed to fine-tune the storytelling theme.
+
+The contribute button is no longer grayed out when the story is completed.
+Below are updated versions of the templates where the contribute button is disabled when a story is completed. For example, in both the home and story detail pages, we now first check if the story is completed. If it is, we disable (gray out) the contribute button. Otherwise, if the user hasn't contributed yet and the story is not completed, the contribute button is enabled.
+
+Below are the updated code snippet examples:
+
+
+templates/home.html
+v6
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Story Blog</title>
+
+templates/story_detail.html
+v6
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+In these updates, if the story's status is "completed" the contribute button will be grayed out and disabled, ensuring that users cannot contribute to a completed story.
+
+I need the styling changes to be applied to the stories in progress, contributed, and completed pages. Also if the user has already contributed or the story is completed, the contribute button should be grayed out.
+Below are updated examples that apply the same magical nature styling to all overview pages (Stories In Progress, Contributions, and Completed) and ensure that if a user has already contributed or if the story is completed the "Contribute" button is disabled (grayed out).
+
+Make sure all of your templates extend the same base.html and reference the common static/styles.css file.
+
+Below are the updated files:
+
+
+templates/base.html
+v13
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Story Blog</title>
+
+static/styles.css
+v5
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+Below are examples for the overview pages (Stories In Progress, Contributions, Completed Stories):
+
+
+templates/in_progress.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stories In Progress - Story Blog</title>
+
+templates/contributions.html
+v4
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contributions - Story Blog</title>
+
+templates/completed_stories.html
+v4
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Completed Stories - Story Blog</title>
+Finally, ensure that your view and edit pages (like story_detail.html, contribute_story.html, edit_history.html, and completed_story_view.html) extend base.html as shown in previous examples so that the navbar and overall styling remain consistent.
+
+With these updates, all pages now share the homepage style, and the contribute button is correctly disabled (grayed out) when the story is completed or the user has already contributed.
+
+The contributions tab gives me this error when I go there:
+
+UndefinedError
+
+jinja2.exceptions.UndefinedError: 'has_contributed' is undefined
+Traceback (most recent call last)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/app.py", line 2548, in __call__
+
+    return self.wsgi_app(environ, start_response)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/app.py", line 2528, in wsgi_app
+
+    response = self.handle_exception(e)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/app.py", line 2525, in wsgi_app
+
+    response = self.full_dispatch_request()
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/app.py", line 1822, in full_dispatch_request
+
+    rv = self.handle_user_exception(e)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/app.py", line 1820, in full_dispatch_request
+
+    rv = self.dispatch_request()
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/app.py", line 1796, in dispatch_request
+
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask_login/utils.py", line 290, in decorated_view
+
+    return current_app.ensure_sync(func)(*args, **kwargs)
+
+    File "/home/students/odd/2025/shoo50/Documents/SoftDev-Work/k35/app/__init__.py", line 176, in contributions
+
+    return render_template('contributions.html', stories=stories)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/templating.py", line 147, in render_template
+
+    return _render(app, template, context)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/flask/templating.py", line 130, in _render
+
+    rv = template.render(context)
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/jinja2/environment.py", line 1304, in render
+
+    self.environment.handle_exception()
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/jinja2/environment.py", line 939, in handle_exception
+
+    raise rewrite_traceback_stack(source=source)
+
+    File "/home/students/odd/2025/shoo50/Documents/SoftDev-Work/k35/app/templates/contributions.html", line 8, in top-level template code
+
+    {% extends "base.html" %}
+
+    File "/home/students/odd/2025/shoo50/Documents/SoftDev-Work/k35/app/templates/base.html", line 65, in top-level template code
+
+    {% block content %}{% endblock %}
+
+    File "/home/students/odd/2025/shoo50/Documents/SoftDev-Work/k35/app/templates/contributions.html", line 25, in block 'content'
+
+    {% elif not has_contributed(story, current_user) %}
+
+    File "/home/students/odd/2025/shoo50/.local/lib/python3.10/site-packages/jinja2/utils.py", line 83, in from_obj
+
+    if hasattr(obj, "jinja_pass_arg"):
+
+    jinja2.exceptions.UndefinedError: 'has_contributed' is undefined
+
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+    dump() shows all variables in the frame
+    dump(obj) dumps all that's known about the object
+
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.
+
+Also the stories in progress page doesn't have the updated changes. And there is a dash between the view and contribute button in the completed page.
+Below are updated code examples that solve these issues:
+
+We now add a context processor in init.py so that the helper function has_contributed is automatically available to all templates.
+The contributions page (and other overview pages like Stories In Progress and Completed Stories) have been updated to use the latest styling changes.
+In the completed stories overview, any unwanted separator (dash) between the View and Contribute buttons has been removed.
+In addition, the contribute button is disabled (grayed out) when the story is completed or the current user has already contributed.
+Below are the updated files:
+
+
+__init__.py
+v13
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+
+templates/contributions.html
+v5
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Contributions - Story Blog</title>
+
+templates/in_progress.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stories In Progress - Story Blog</title>
+
+templates/completed_stories.html
+v5
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completed Stories - Story Blog</title>
+In summary:
+
+A new context processor in init.py adds has_contributed to every template.
+The contributions, in_progress, and completed pages now follow the magical nature styling and disable the contribute button when appropriate (if the story is completed or the user has already contributed).
+Any extra separator has been removed from the completed stories page.
+Feel free to adjust the styling further as needed!
+
+Style the register page as well. Also make sure that the login container doesn't block out the nav bar, perhaps make it part of the navbar.
+Below are updated code examples that include styling for the register page as well as an updated navbar that now incorporates the login container instead of overlapping it.
+
+In this update: • The base.html now has a single navbar that includes both the navigation links and the login/register (or logout) controls.
+• The register page is styled to match the magical nature theme using the same "card" styling and extends base.html to maintain consistency.
+
+Below are the updated files:
+
+
+templates/base.html
+v14
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+
+templates/register.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - Story Blog</title>
+
+static/styles.css
+v6
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+These changes ensure that every page—including the registration page—is styled consistently with the magical nature theme, and that the navigation bar now includes both navigation links and login/register controls so the login container does not block the navbar.
+
+also I want the database to be sqlite instead of sqlalchemy
+2/2
+2/2
+Below is an updated example of your application using Python’s built‐in sqlite3 module (with a helper schema file) instead of SQLAlchemy. In this version, all database operations are performed using raw sqlite3 calls. The example also continues to use Flask‑Login, and a context processor makes your helper function available throughout your templates.
+
+Make sure to create a schema file (schema.sql) in your app directory that defines your tables (users, stories, and edits).
+
+Below are the code examples:
+
+
+app/__init__.py
+v1
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+
+schema.sql
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
+With these changes:
+• The app now uses raw sqlite3 with a schema defined in schema.sql.
+• All queries are performed using the sqlite3 module.
+• The context processor makes the has_contributed helper available throughout your templates.
+
+Remember to run the init_db() function (for example, by temporarily uncommenting its call inside a with app.app_context() block) to initialize your database before using the application.
+Feel free to adjust the code and styling as needed!
+
+what should the file structure look like
+Below is an example file structure for your Flask project using SQLite. You could organize your project like this:
+
+plaintext
+my_flask_app/
+├── app/
+│   ├── __init__.py          # Application factory, routes, and database helpers
+│   ├── schema.sql           # Database schema for sqlite3 initialization
+│   ├── templates/           # HTML templates for the application
+│   │   ├── base.html
+│   │   ├── home.html
+│   │   ├── register.html
+│   │   ├── create_story.html
+│   │   ├── story_detail.html
+│   │   ├── edit_history.html
+│   │   ├── contribute_story.html
+│   │   ├── completed_story_view.html
+│   │   ├── in_progress.html
+│   │   ├── contributions.html
+│   │   └── completed_stories.html
+│   └── static/              # Static files (CSS, images, etc.)
+│       └── styles.css
+├── venv/                    # Your virtual environment (if using one)
+└── run.py                   # Entry point for running the application
+In this structure:
+
+The app/__init__.py file contains your Flask app instance, routes, and database functions using sqlite3.
+The app/schema.sql file holds SQL commands to create your database tables.
+All your HTML templates are stored under app/templates/.
+Your CSS file (and any additional assets like images) are placed under app/static/.
+The run.py file at the root is used to start your Flask application.
+This layout keeps your app modular and organized while ensuring consistency in your file organization.
+
+now I get this error when I run the app:
+OperationalError
+sqlite3.OperationalError: no such table: stories
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 113, in home
+stories = db.execute("SELECT * FROM stories").fetchall()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: stories
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+The error "no such table: stories" means that your database hasn't been initialized with the required tables. To fix this, you need to run the init_db() function to create tables based on your schema.sql file.
+
+Here's what you can do:
+
+Make sure you have a file called schema.sql in your app directory (for example, in app/schema.sql) with the following content:
+
+app/schema.sql
+v1
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
+In your app/init.py file, you have an init_db() function that reads this file and executes the SQL script to create tables. To run it, you have a couple of options:
+
+Option A: Temporarily uncomment the initialization lines at the bottom of your init.py file, run your app once, and then comment them out again.
+
+Option B: Open a Python shell in the application's context and run the initialization manually. For example:
+
+bash
+$ flask shell
+Then inside the shell:
+
+Python
+from app import init_db
+init_db()
+Once the database is initialized and the tables are created, you should no longer see the "no such table: stories" error.
+Make sure that the DATABASE configuration in your Flask app points to the correct SQLite file (e.g., 'stories.db') and that your file structure follows a consistent layout.
+
+can you just run the function to create all tables if they don't exist when the website is started
+Below is an updated example of your app/init.py file. In this version, we use Flask's before_first_request decorator to run the init_db() function automatically when the website is started. This ensures that if the tables don't exist, they are created before the first request is processed.
+
+
+app/__init__.py
+v2
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+With this update, the init_db() function is automatically called before the first request is processed, ensuring that all required tables are created if they don't exist.
+
+The preview for the stories is now saying no content yet. Also style the create story page. And also add a little bit of space between the create story button and the preview container. The login and register buttons on the navbar are a little weird, the login has brown text but the register has white. Also when I hover on register, behind the button there is a another rectangle that is much bigger than the button. 
+Below are updated code examples that address the following issues:
+
+• The preview for each story now displays proper content (if available), or “No content yet” if there’s no edit. (If you’re still seeing “No content yet” for a story that should have content, please verify that an edit was created when the story was added.)
+
+• The create story page is now styled consistently with a card layout matching the magical nature theme.
+
+• A container with extra bottom spacing has been added between the "Create New Story" button and the preview container.
+
+• The navbar login and register buttons have been tweaked so that both share consistent styling. In particular, the register button now shares the same background color, text color, padding, and hover effect as the login button—removing the extra large rectangle on hover.
+
+Below are the updated files:
+
+
+app/templates/base.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+
+app/static/styles.css
+v1
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+
+app/templates/home.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Story Blog</title>
+
+app/templates/create_story.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Story - Story Blog</title>
+With these updates:
+
+The home page now wraps the "Create New Story" button inside a container (.create-story-btn-container) with extra bottom spacing.
+The story preview block in home.html now checks that there is content within last_edit before displaying it—otherwise it shows “No content yet.”
+The create story page is styled as a card with full-width input fields and padding.
+The navbar buttons for login and register have been unified in style to remove color inconsistencies and extra hover effects.
+Feel free to further adjust spacing and styling as needed to match your design vision!
+
+Now there is a dash between the view and contribute button on the hompage for the story preview containers. The preview also still doesn't show on all pages, it just says "no content yet". Additionally there is still a large highlighted rectangle behind the register button when I hover over it.
+Below are updated code examples to address all the issues:
+
+• We now update the home route so that for every story the last edit is fetched and added to the story (as story.last_edit) before passing the stories to the template. This ensures that the preview shows properly when a story has content.
+• We update the home template so that the "View" and "Contribute" buttons are wrapped in a container (with inline styling) to remove any unwanted dash or extra spacing between them.
+• We update the navbar in base.html so that the register link is rendered as an anchor tag styled as a button (instead of a button nested in an anchor) to fix the hover issue.
+
+Below are the updated files:
+
+
+app/__init__.py
+v3
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+
+app/templates/base.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+
+app/templates/home.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Story Blog</title>
+
+app/templates/create_story.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Story - Story Blog</title>
+
+app/static/styles.css
+v2
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+With these changes:
+
+The home route now adds a last_edit key to each story so previews show correctly.
+The home.html template displays the preview based on story.last_edit and wraps the action buttons in a .btn-group container to remove any unwanted dash or extra spacing.
+The navbar now displays the "Register" link as a styled anchor (using the btn class) so its hover effect matches the login button and does not produce a large highlighted rectangle.
+Feel free to adjust the CSS and layout further as needed.
+
+the previews on the in-progress page and contributed page still says no content availible. Also for the view page replace the border with a nice oak wood texture. 
+Below are updated code examples to fix the preview text on the In-Progress and Contributions pages and to update the view page border with a nice oak wood texture.
+
+In these updates:
+
+• In the routes for in_progress and contributions (and in home), we now add a "last_edit" key for each story.
+• In the templates for in_progress.html and contributions.html, we display the preview from "story.last_edit.content" if available.
+• In the story_detail.html (the view page), the container now uses a new CSS class "story-view-card" that replaces the previous wood border with an oak wood texture.
+• We update the CSS (styles.css) with a new rule for the "story-view-card" class and adjust the preview display so that it properly shows edit content instead of "No content available."
+
+Below are the code examples:
+
+
+app/__init__.py
+v4
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+
+app/templates/in_progress.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stories In Progress - Story Blog</title>
+
+app/templates/contributions.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Contributions - Story Blog</title>
+
+app/templates/story_detail.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+
+app/static/styles.css
+v3
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+With these changes:
+
+The In-Progress and Contributions pages now extract and display the preview content from each story’s latest edit.
+The "No content available" message only appears when there truly is no content.
+The view page (story_detail.html) uses the "story-view-card" class that applies an oak wood texture border.
+The navbar and button group styles have been adjusted so that unwanted dashes or extra spacing between the "View" and "Contribute" buttons are removed.
+Feel free to further adjust the CSS as needed.
+
+for completed stories now the preview says no content availible
+Below is an updated version of the completed stories template. In this version, we ensure that if a story's last edit exists and its content is non-empty, we display the entire content (or you can choose to truncate it as needed). Otherwise, we show "No content available." This should fix the issue where completed stories are always showing "No content available."
+
+
+app/templates/completed_stories.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completed Stories - Story Blog</title>
+Make sure that your route for completed stories is also supplying each story with its latest edit (typically by setting a key like "last_edit" on each story dictionary) so that the template can properly display the preview.
+
+Make it such that 2 stories can't have the same title, also allow the original creator to edit the title of the story.
+Below are the changes needed to enforce unique story titles and allow the original creator to edit the title.
+
+We must update our database schema for the stories table to add two things:
+
+A unique constraint on the title.
+A new column (creator_id) to record the original creator of the story.
+Then we update our Flask application to: • Store the current user's id as the creator_id when a story is created.
+• Prevent the creation of stories with duplicate titles.
+• Add a new route and template that let the original creator update the title (after verifying they are indeed the creator).
+
+Below are the updated file examples.
+
+
+app/schema.sql
+v2
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS stories;
+DROP TABLE IF EXISTS edits;
+
+CREATE TABLE IF NOT EXISTS users (
+
+app/__init__.py
+v5
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+
+app/templates/edit_story_title.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Story Title - Story Blog</title>
+With these changes:
+
+The schema now enforces a unique title and stores the creator (creator_id).
+When a story is created, the creator is saved and duplicate titles are checked.
+The new route /edit_story_title/<story_id> allows only the original creator to update the title after validating that the new title is unique.
+Remember to reinitialize your database after modifying the schema (for example, by deleting the existing SQLite database file and running the app once).
+
+make sure that the tables are always initialized if they don't exit when a user enters the site
+Below is an updated version of your app's init.py where we ensure that the tables are always initialized. Instead of only running the database initialization once (using before_first_request), we use a before_request hook to call init_db() on each request. Because your schema uses CREATE TABLE IF NOT EXISTS, this is safe and will only create any missing tables.
+
+
+app/__init__.py
+v6
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+This change ensures that, whenever a request is made to your application, the database schema is run and any missing tables are created if they do not exist.
+
+don't omit routes, always give me the full file
+Below is the full, complete file for app/init.py with all the routes included. The file ensures that, on every request, the database schema is executed so that any missing tables will be created. All routes—including authentication, story creation, story detail, editing story title, and listing stories—are provided.
+
+
+app/__init__.py
+v7
+import sqlite3
+from flask import Flask, g, render_template, redirect, url_for, request, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
+
+ Public code references from 1 repository
+This full file ensures that the database schema is verified and the tables are created (if missing) on every request. It also enforces unique story titles and allows the original creator to edit the title via the /edit_story_title/<story_id> route.
+
+when in the viewing window also preserve the spaces, newlines, tabs, etc. Also add a button somehwere for the creator to edit the title of the story if they choose to.
+Below is an updated version of your story detail template file. In this version:
+
+• The story content is now displayed in a div with CSS white-space: pre-wrap; so that all spaces, newlines, tabs, and other formatting are preserved.
+• If the current user is the creator of the story, a button labeled "Edit Title" is displayed. Clicking it will take the user to the title edit page.
+
+
+app/templates/story_detail.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+This update ensures that the text formatting exactly as entered (with spaces, newlines, tabs, etc.) is preserved in the viewing area, and it provides an "Edit Title" button for the creator of the story.
+
+Perfect! Now just style the text to keep it consistent with the story theme
+Below is an updated version of your CSS file with additional text styling that keeps everything consistent with the story's magical theme. This update applies a decorative font for headings and story content, adds text shadow for a subtle magical glow, and uses earthy colors for a warm, medieval feel.
+
+
+app/static/styles.css
+v4
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+This styling update applies decorative fonts and text shadows, ensuring that all textual elements stay consistent with your story's magical theme throughout the site. Enjoy the refreshed look!
+
+All text on the website should follow this theme. Also for some reason when viewing a completed story, it adds some spaces before the first entry, remove it please.
+Below are two updated files that address your requests:
+
+In the stylesheet (app/static/styles.css) all text elements now follow the magical story theme consistently (using a decorative font, text shadow, and earthy colors).
+In the completed story view template (app/templates/completed_story_view.html), we ensure that extra spaces before the first entry are removed by using the Jinja2 trim filter (|trim) on the full text.
+
+app/static/styles.css
+v5
+/* Global Styles and Magical Nature-Themed Background */
+body {
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
+  background-size: cover;
+  margin: 0;
+
+app/templates/completed_story_view.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Completed Story</title>
+In the updated CSS, all headings, paragraphs, and story contents adopt the magical theme styling. Also, in the completed story view template, the |trim filter removes any leading (or trailing) extra whitespace from the full text so that no unwanted spaces appear before the first entry.
+
+Feel free to adjust the styles further to perfectly match your desired theme!

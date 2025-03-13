@@ -1,2 +1,16 @@
+DISCO:
 Must give Copilot tasks in small chunks, break it up into easier tasks it can complete instead of one big, complex task it will mess up.
 Be very specific with instructions.
+
+Q/C/C:
+some areas of interest...
+q0: How many tries did it take to "get it right?"
+It took quite a few tries, the first time I tried to give Copilot the entire task at once and it wasn't able to produce anything useful but when I restarted and broke down the task into smaller steps, it was able to produce the output I wanted. It probably took ~50 prompts or so to get my desired result.
+q1: Did you catch any errors? If so, how did you notice, and what did you do?
+A lot of the time it doesn't produce the entire file of a code, it will give you the changes then the rest will be something like "# rest of your routes." I fixed this by specifying to return the whole file every time. It also consistently produced code with errors because it often forgot about the other files that it edited a few prompts ago, however they were easily fixed by copy pasting the error into the chat and asking Copilot to fix it.
+q2: How similar or different is the bot's output to that of your past self / old team?
+It is quite similar, I gave it very specific instructions and in my opinion it actually outperforms our site. It has extra functionality we didn't include and is also more concise.
+C: Tried to use sqlalchemy instead of sqlite
+C: originally tried to run site using some app commands, had to specify to use __init__ as main run file.
+C: Many times I saw that the code was referenced from another repo on GitHub
+C: Can't upload files or images, only repos

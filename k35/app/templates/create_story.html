@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Create New Story</title>
+  <meta charset="UTF-8">
+  <title>Create Story - Story Blog</title>
 </head>
 <body>
-    {% extends "base.html" %}
-    {% block content %}
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
     <h1>Create New Story</h1>
-    <form method="POST" action="{{ url_for('create_story') }}">
-        <label for="title">Title:</label><br>
-        <input type="text" name="title" required><br><br>
-        <label for="content">Content:</label><br>
-        <textarea name="content" rows="10" cols="50" required></textarea><br><br>
-        <button type="submit">Create Story</button>
+    <form action="{{ url_for('create_story') }}" method="POST">
+      <label for="title">Story Title:</label><br>
+      <input type="text" id="title" name="title" required style="width:100%; padding:8px; margin-bottom:10px;"><br>
+      <label for="content">Your Story Content:</label><br>
+      <textarea id="content" name="content" rows="10" style="width:100%; padding:8px; margin-bottom:10px;" required></textarea><br>
+      <button type="submit" class="btn">Create Story</button>
     </form>
-    {% endblock %}
+  </div>
+{% endblock %}
 </body>
 </html>

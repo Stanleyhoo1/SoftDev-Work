@@ -2,20 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{ story.title }} - Full Story</title>
+  <title>{{ story.title }} - Completed Story</title>
 </head>
 <body>
-  {% extends "base.html" %}
-  {% block content %}
-    <div class="completed-story">
-      <h1>{{ story.title }}</h1>
-      <div class="story-text">
-        {{ full_text }}
-      </div>
-      <div class="contributors">
-        Contributors: {{ contributors }}
-      </div>
+{% extends "base.html" %}
+{% block content %}
+  <div class="completed-story">
+    <h1>{{ story.title }}</h1>
+    <div class="story-text">
+      <p>{{ full_text|trim }}</p>
     </div>
-  {% endblock %}
+    <div class="contributors">
+      <p>Contributors: {{ contributors }}</p>
+    </div>
+    {% if current_user.is_authenticated and current_user.id == story.creator_id %}
+      <div class="btn-group">
+        <a href="{{ url_for('edit_story_title', story_id=story.id) }}"><button class="btn">Edit Title</button></a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
 </body>
 </html>

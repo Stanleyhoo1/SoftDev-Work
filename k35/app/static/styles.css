@@ -8,25 +8,68 @@ body {
   color: #333;
 }
 
+/* Decorative Heading Styling */
+h1, h2 {
+  font-family: "Cinzel Decorative", cursive;
+  color: #5a381e;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+}
+
+/* Paragraph and General Text Styling */
+p {
+  margin: 0 0 10px;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+/* Story Content Styling within Viewing Windows */
+.story-view-card .story-content,
+.completed-story .story-text {
+  font-family: "Cinzel Decorative", cursive;
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #4a3b2e; /* Earthy tone */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  white-space: pre-wrap;
+}
+
 /* Navbar Styling */
 nav {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 10px 20px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-nav a {
+.nav-left a, .nav-right a, .nav-right form button {
   color: #5a381e;
   text-decoration: none;
-  margin: 0 15px;
+  margin: 0 10px;
   padding: 8px 12px;
   border-radius: 4px;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
-nav a:hover {
+.nav-left a:hover, .nav-right a:hover, .nav-right form button:hover {
   background: #e3c9b6;
+}
+.nav-right form button,
+.nav-right a.btn {
+  background: #8c6a43;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  margin: 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.nav-right form button:hover,
+.nav-right a.btn:hover {
+  background: #a67c52;
+  transform: scale(1.05);
 }
 
 /* Flash Messages */
@@ -53,17 +96,6 @@ nav a:hover {
   color: #721c24;
 }
 
-/* Login Container */
-.login-container {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
 /* Button Styling */
 .btn {
   background: #8c6a43;
@@ -88,21 +120,31 @@ button[disabled] {
   transform: none;
 }
 
-/* Card / View Window Styling with Magical Nature Theme (Vine/Branch Border) */
+/* Card / View Window Styling with a Magical Nature Theme */
 .card {
   background: #fff;
   border: 2px solid #c1a173;
-  border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png")
-    30 round;
+  border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png") 30 round;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   padding: 20px;
   margin-bottom: 20px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Story View Page Styling with Oak Wood Texture */
+.story-view-card {
+  background: #fff;
+  border: 4px solid transparent;
+  border-image: url("https://www.transparenttextures.com/patterns/oakwood.png") 30 round;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 /* Completed Story View Styling */
@@ -112,8 +154,7 @@ button[disabled] {
   padding: 30px;
   background: #fff;
   border: 2px solid #c1a173;
-  border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png")
-    30 round;
+  border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png") 30 round;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
@@ -187,4 +228,18 @@ button[disabled] {
 .back-button:hover {
   background: #a67c52;
   transform: scale(1.05);
+}
+
+/* Create Story Button Container Spacing */
+.create-story-btn-container {
+  margin-bottom: 20px;
+}
+
+/* Button Group for Story Preview Actions */
+.btn-group {
+  margin-top: 10px;
+  display: inline-block;
+}
+.btn-group a, .btn-group button {
+  margin-right: 5px;
 }

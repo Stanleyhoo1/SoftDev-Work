@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS stories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL UNIQUE,
+    status TEXT NOT NULL DEFAULT 'in_progress',
+    creator_id INTEGER NOT NULL,
+    FOREIGN KEY(creator_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS edits (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    story_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    timestamp DATETIME NOT NULL,
+    FOREIGN KEY(story_id) REFERENCES stories(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);

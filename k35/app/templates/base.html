@@ -1,35 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Story Blog</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  </head>
-  <body>
-    <nav>
+<head>
+  <meta charset="UTF-8">
+  <title>Story Blog</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
       <a href="{{ url_for('home') }}">Home</a>
       <a href="{{ url_for('in_progress') }}">Stories In Progress</a>
       <a href="{{ url_for('completed') }}">Completed Stories</a>
       {% if current_user.is_authenticated %}
         <a href="{{ url_for('contributions') }}">Contributions</a>
       {% endif %}
-    </nav>
-
-    <!-- Fixed flash message container -->
-    <div class="flash-container">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="flash-message {{ category }}">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
     </div>
-
-    <!-- Fixed login container in top-right -->
-    <div class="login-container">
+    <div class="nav-right">
       {% if current_user.is_authenticated %}
         <span>Hello, {{ current_user.username }}!</span>
         <form action="{{ url_for('logout') }}" method="GET" style="display:inline;">
@@ -37,31 +23,40 @@
         </form>
       {% else %}
         <form action="{{ url_for('login') }}" method="POST" style="display:inline;">
-          <input type="text" name="username" placeholder="Username" required />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="password" name="password" placeholder="Password" required>
           <button type="submit" class="btn">Login</button>
         </form>
-        <a href="{{ url_for('register') }}"><button class="btn">Register</button></a>
+        <a href="{{ url_for('register') }}" class="btn">Register</a>
       {% endif %}
     </div>
+  </nav>
 
-    <hr />
+  <!-- Fixed flash message container -->
+  <div class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
 
-    <script>
-      // Auto-fade flash messages after 4 seconds.
-      setTimeout(function () {
-        var flashMessages = document.getElementsByClassName("flash-message");
-        for (var i = 0; i < flashMessages.length; i++) {
-          flashMessages[i].style.opacity = "0";
-        }
-      }, 4000);
-    </script>
+  <hr>
 
-    {% block content %}{% endblock %}
-  </body>
+  <script>
+    // Auto-fade flash messages after 4 seconds.
+    setTimeout(function(){
+      var flashMessages = document.getElementsByClassName('flash-message');
+      for(var i = 0; i < flashMessages.length; i++){
+        flashMessages[i].style.opacity = "0";
+      }
+    }, 4000);
+  </script>
+
+  {% block content %}{% endblock %}
+</body>
 </html>
