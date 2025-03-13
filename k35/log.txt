@@ -1,0 +1,2 @@
+Must give Copilot tasks in small chunks, break it up into easier tasks it can complete instead of one big, complex task it will mess up.
+Be very specific with instructions.

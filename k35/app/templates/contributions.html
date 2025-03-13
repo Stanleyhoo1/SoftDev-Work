@@ -1,13 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Contributions - Story Blog</title>
+</head>
+<body>
 {% extends "base.html" %}
-
 {% block content %}
-  <h1>Your Contributions</h1>
-  <ul>
-    {% for edit in edits %}
-      <li>
-        <a href="{{ url_for('story', story_id=edit.story.id) }}">{{ edit.story.title }}</a>
-        <p>{{ edit.body[:100] }}...</p>
-      </li>
+  <h1>Stories You Contributed To</h1>
+  <div>
+    {% for story in stories %}
+      <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+         <h2>{{ story.title }}</h2>
+         {% set last_edit = story.edits|sort(attribute='timestamp', reverse=true)|first %}
+         {% if last_edit %}
+           <p>{{ last_edit.content }}</p>
+         {% else %}
+           <p>No content available.</p>
+         {% endif %}
+         <a href="{{ url_for('story_detail', story_id=story.id) }}"><button>View</button></a>
+         <a href="{{ url_for('edit_history', story_id=story.id) }}"><button>View Full History</button></a>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}
+</body>
+</html>

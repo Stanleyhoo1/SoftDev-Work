@@ -1,4 +1,6 @@
-#!/home/students/odd/2025/shoo50/Documents/SoftDev-Work/k35/venv/bin/python3
+#!/bin/sh
+'''exec' "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys

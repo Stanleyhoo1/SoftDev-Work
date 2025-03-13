@@ -1,162 +1,1136 @@
-I want to create a flask app of a story blog website
+I want to create a Flask app of a story blog website. It will have 4 main pages: home, stories in progress, contributions, and completed stories. Create a Flask app than can host this. It should be executed through the __init__.py file, which is the main file. Websites should not currectly have anything. This s just the structure.
+Below is a basic Flask application structure with an init.py file that creates four routes for your blog website: home, stories in progress, contributions, and completed stories.
 
-Let's start by outlining the steps to create a Flask application for a story blog website. Here's a high-level plan:
 
-    Set Up the Flask Environment
-        Install Flask using pip.
-        Create a new Flask project directory.
+__init__.py
+v1
+from flask import Flask
 
-    Create the Flask Application
-        Initialize the Flask app.
-        Set up the basic structure (directories for templates, static files, etc.).
+app = Flask(__name__)
 
-    Design the Database Schema
-        Define models for Users, Stories, and Comments using an ORM like SQLAlchemy.
-        Set up the database.
+@app.route('/')
+This init.py file defines the four required pages with placeholder responses, serving as the starting structure for your story blog website.
 
-    Implement User Authentication
-        Create user registration and login features.
-        Use Flask-Login for session management.
+I need the pip install dependencies as well. Each page should have its own html page. Now I will tell you the content displayed on each page. Home is essentially all of the stories. It displays a preview of each story, which is the title and couple of sentences from the last edit with an option to make edits to the story if they havn't contruibuted already. Each user can only contribute once to each story, and the edits are directly appended to the end of each edit. If the user hasn't created an edit on a story yet, they can only view the last made edit unless the story in completed in which case they have access to the full story. The stories in progress, displays a previews of all stories in progress. Completed stories in same but for completed stories. For contributions, display stories the user can contributed to, only accesible if the user is logged in. For the editing window, users have a textbox to make edits and an open to complete a story. Pages should be accesible by navbar, except for the edit window in which you need to click a button. Changes should be saved to the database. Users must be logged in to edit stories.
+Below is a basic structure for your Flask story blog website. This example includes the pip install dependencies, a basic Flask app in init.py with SQLAlchemy and Flask‑Login, and separate HTML templates for each page (home, stories in progress, completed stories, contributions, and the edit window).
 
-    Create Routes and Views
-        Define routes for the main pages: home, story details, user profile, etc.
-        Create views and templates for each route.
+Follow these steps:
 
-    Implement CRUD Operations
-        Allow users to create, read, update, and delete stories.
-        Implement comment functionality on stories.
+Create a requirements.txt file with your pip dependencies.
+Create an init.py file that sets up the Flask app, database models, routes, and basic authentication.
+Create a templates folder with the following HTML pages: base.html, home.html, stories_in_progress.html, completed_stories.html, contributions.html, edit_story.html, and login.html.
+Include a basic navbar in base.html to navigate between pages (except for the edit window, which is accessed by clicking a button).
+Below are the code examples formatted as file blocks:
 
-    Add Styling and Front-End Features
-        Use HTML, CSS, and JavaScript to style the website.
-        Optionally, use a front-end framework like Bootstrap.
 
-    Testing and Deployment
-        Write tests for your application.
-        Deploy the application to a server (e.g., Heroku, AWS).
+requirements.txt
+v1
+Flask==2.2.2
+Flask_SQLAlchemy==3.0.2
+Flask_Login==0.6.2
 
-Let's start by setting up the Flask environment and creating a basic Flask application.
+__init__.py
+v2
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-Let's create the initial files and directories for our Flask project.
-1 vulnerability detected
+app = Flask(__name__)
+ Public code references from 1 repository
 
-Next, we can create some basic routes and views.
-This is the format of the sotry website: there are 4 main webpages: home, stories in progress, contributions, and completed stories. Home is essentially all of the stories. It displays a preview of each story, which is the title and couple of sentences from the last edit with an option to make edits to the story if they havn't contruibuted already. Each user can only contribute once to each story, and the edits are directly appended to the end of each edit. If the user hasn't created an edit on a story yet, they can only view the last made edit unless the story in completed in which case they have access to the full story. The stories in progress, displays a previews of all stories in progress. Completed stories in same but for completed stories. For contributions, display stories the user can contributed to, only accesible if the user is logged in. For the editing window, users have a textbox to make edits and an open to complete a story. Pages should be accesible by navbar, except for the edit window in which you need to click a button. Changes should be saved to the database. Users must be logged in to edit stories.
+templates/base.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
 
-Great! Let's break down the requirements and create the necessary files and code for this Flask application. We'll start by setting up the basic structure and then implement each feature step by step.
-Project Structure
+templates/home.html
+v1
+{% extends "base.html" %}
+{% block content %}
+<h1>All Stories</h1>
+{% for story in stories %}
+    <div>
 
-We'll create a project structure like this:
-Code
+templates/stories_in_progress.html
+v1
+{% extends "base.html" %}
+{% block content %}
+<h1>Stories In Progress</h1>
+{% for story in stories %}
+    <div>
 
-story-blog/
-    ├── app/
-    │   ├── __init__.py
-    │   ├── models.py
-    │   ├── routes.py
-    │   ├── static/
-    │   ├── templates/
-    │   │   ├── base.html
-    │   │   ├── home.html
-    │   │   ├── in_progress.html
-    │   │   ├── contributions.html
-    │   │   ├── completed.html
-    │   │   ├── story_edit.html
-    │   └── forms.py
-    ├── migrations/
-    ├── venv/
-    ├── .env
-    ├── config.py
-    ├── requirements.txt
-    ├── run.py
-    └── README.md
+templates/completed_stories.html
+v1
+{% extends "base.html" %}
+{% block content %}
+<h1>Completed Stories</h1>
+{% for story in stories %}
+    <div>
 
-Public code references from 7 repositories
+templates/contributions.html
+v1
+{% extends "base.html" %}
+{% block content %}
+<h1>Stories You Can Contribute To</h1>
+{% for story in stories %}
+    <div>
 
-Step 1: Setting Up the Flask Environment
+templates/edit_story.html
+{% extends "base.html" %}
+{% block content %}
+<h1>Edit Story: {{ story.title }}</h1>
+<form method="POST">
+    <textarea name="edit_content" rows="10" cols="50" placeholder="Enter your edit here..."></textarea><br>
 
-Let's start by creating the initial files and directories for our Flask project.
-run.py
-Public code references from 7 repositories
+templates/login.html
+{% extends "base.html" %}
+{% block content %}
+<h1>Login</h1>
+<form method="POST">
+    <input type="text" name="username" placeholder="Username">
+This setup provides a minimal framework for your story blog website. Each page is connected via the navbar (except the edit page, which is accessed by clicking the “Edit Story” or “Contribute/Edit” button), and changes are saved to a SQLite database using SQLAlchemy. Users must be logged in to access the “Contributions” and “Edit Story” pages.
 
-app/__init__.py
-Public code references from 7 repositories
+Feel free to expand on this structure by adding proper authentication (passwords, registration), more detailed database models, and refined HTML/CSS for styling.
 
-config.py
-Public code references from 1 repository
+I get this error when I run it:
+(venv) stanleyhoo1@LAPTOP-0AENOO27:/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app$ python3 __init__.py
+Traceback (most recent call last):
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 1, in <module>
+    from flask import Flask, render_template, redirect, url_for, request, flash
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/__init__.py", line 5, in <module>
+    from .app import Flask as Flask
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 30, in <module>
+    from werkzeug.urls import url_quote
+ImportError: cannot import name 'url_quote' from 'werkzeug.urls' (/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/werkzeug/urls.py). Did you mean: 'unquote'?
+2/2
+2/2
+Below is the explanation and updated code for your project.
 
-Step 2: Creating Models
+It looks like the issue is due to an incompatibility between Flask (version 2.2.2) and a newer version of Werkzeug that no longer has the url_quote function. One simple fix is to pin Werkzeug to a version that still includes url_quote (for example, Werkzeug==2.0.3).
 
-We'll create the models for Users, Stories, and Edits.
-app/models.py
-Public code references from 14 repositories
+Please update your requirements.txt file with the following contents so that your dependencies are compatible:
 
-Step 3: Creating Routes
 
-We'll create the routes for the main pages and the editing functionality.
-app/routes.py
-Public code references from 10 repositories
+requirements.txt
+v2
+Flask==2.2.2
+Flask_SQLAlchemy==3.0.2
+Flask_Login==0.6.2
+Werkzeug==2.0.3
+After updating the file, reinstall your dependencies (for example, by running pip install -r requirements.txt inside your virtual environment).
 
-Step 4: Creating Forms
+Your application code (init.py) does not need any changes for this fix.
 
-We'll create forms for user login, registration, and story editing.
-app/forms.py
-Public code references from 14 repositories
+Let me know if you have any further questions!
 
-Step 5: Creating Templates
+(venv) stanleyhoo1@LAPTOP-0AENOO27:/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app$ pip install -r requirements.txt
+Requirement already satisfied: Flask==2.2.2 in /mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages (from -r requirements.txt (line 1)) (2.2.2)
+Requirement already satisfied: Flask_SQLAlchemy==3.0.2 in /mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages (from -r requirements.txt (line 2)) (3.0.2)
+Requirement already satisfied: Flask_Login==0.6.2 in /mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages (from -r requirements.txt (line 3)) (0.6.2)
+Collecting Werkzeug==2.0.3 (from -r requirements.txt (line 4))
+  Downloading Werkzeug-2.0.3-py3-none-any.whl.metadata (4.5 kB)
+INFO: pip is looking at multiple versions of flask to determine which version is compatible with other requirements. This could take a while.
+ERROR: Cannot install Werkzeug==2.0.3 and flask==2.2.2 because these package versions have conflicting dependencies.
 
-We'll create the HTML templates for each page.
-app/templates/base.html
-Public code references from 13 repositories
+The conflict is caused by:
+    The user requested Werkzeug==2.0.3
+    flask 2.2.2 depends on Werkzeug>=2.2.2
 
-app/templates/home.html
-Public code references from 9 repositories
+To fix this you could try to:
+1. loosen the range of package versions you've specified
+2. remove package versions to allow pip to attempt to solve the dependency conflict
 
-app/templates/in_progress.html
-Public code references from 9 repositories
+ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
 
-app/templates/completed.html
-Public code references from 9 repositories
+perhaps try using a different function
+Below is an updated requirements.txt and explanation. The error indicates that Flask 2.2.2 requires a version of Werkzeug ≥2.2.2, but your requirements.txt is explicitly requesting Werkzeug==2.0.3. You have two options:
 
-app/templates/contributions.html
-Public code references from 3 repositories
+Remove the Werkzeug version requirement from your requirements.txt so that pip installs a version that meets Flask's dependency requirements.
+Update the Werkzeug version to at least 2.2.2 (for example, Werkzeug==2.2.2 or a later version).
+Below is one approach (option 2) where we update the Werkzeug line in requirements.txt. Use the following files:
 
-app/templates/story_edit.html
-Public code references from 1 repository
 
-Step 6: Creating the Database and Running the App
+requirements.txt
+v3
+Flask==2.2.2
+Flask_SQLAlchemy==3.0.2
+Flask_Login==0.6.2
+Werkzeug==2.2.2
+Alternatively, if you decide not to pin a Werkzeug version, you can simply remove the Werkzeug line so that pip chooses a compatible version automatically.
 
-    Create a virtual environment and activate it:
-    bash
+now I get this error:
+(venv) stanleyhoo1@LAPTOP-0AENOO27:/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app$ python3 __init__.py
+Traceback (most recent call last):
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 103, in <module>
+    db.create_all()
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask_sqlalchemy/extension.py", line 868, in create_all
+    self._call_for_binds(bind_key, "create_all")
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask_sqlalchemy/extension.py", line 839, in _call_for_binds
+    engine = self.engines[key]
+             ^^^^^^^^^^^^
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask_sqlalchemy/extension.py", line 628, in engines
+    app = current_app._get_current_object()  # type: ignore[attr-defined]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/werkzeug/local.py", line 513, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
 
-python3 -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+Here's one approach to fix this error by ensuring that the database creation code runs within an application context. Wrap the call to db.create_all() in a with app.app_context() block. Below is the updated init.py file:
 
-Public code references from 12 repositories
 
-Install the dependencies:
+__init__.py
+v3
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 1 repository
+In this code, the call to db.create_all() is executed inside a with app.app_context() block, which sets up the necessary application context needed for database operations. This change should resolve the RuntimeError you were encountering.
+
+Great! Now that I have a working framework, lets add some functionality. Instead of having a login page, I want a login container in the top right of every page. If the user is logged in, display a greeting such as "Hello {user}!" with a logout button next to it for users to log out. There should also be a register button in that container so users can register an account if they don't currenlty have one. User info should be stored in the database. You can structure it however you like. 
+Below are updated code examples for your Flask app that add a login container at the top right of every page. This container displays a login form and the register button if the user isn’t logged in, or a greeting with a logout button when the user is logged in. User information (username and password) is stored in the database.
+
+Below are the updated file examples:
+
+
+__init__.py
+v4
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+
+templates/base.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+ Public code references from 1 repository
+
+templates/register.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+ Public code references from 1 repository
+With these changes:
+
+The init.py file now includes a registration route and modifies the login route to accept POST requests coming from the login container.
+The base.html template now displays a login container in the top right. When the user is not logged in, a small inline login form and a register button are displayed; when logged in, a greeting and logout button are shown.
+This structure lets you manage user login and registration within each page while storing user information in the database.
+
+I get this error when I try to register:
+OperationalError
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.password
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.password AS user_password 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('a', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+self.dialect.do_execute(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+cursor.execute(statement, parameters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The above exception was the direct cause of the following exception:
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 62, in register
+if User.query.filter_by(username=username).first():
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2759, in first
+return self.limit(1)._iter().first()  # type: ignore
+       ^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2858, in _iter
+result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                              
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+return self._execute_internal(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+result: Result[Any] = compile_state_cls.orm_execute_statement(
+                      
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+result = conn.execute(
+         
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+return meth(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+return connection._execute_clauseelement(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+ret = self._execute_context(
+      
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+return self._exec_single_context(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+self._handle_dbapi_exception(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+self.dialect.do_execute(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+cursor.execute(statement, parameters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.password
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.password AS user_password
+FROM user
+WHERE user.username = ?
+LIMIT ? OFFSET ?]
+[parameters: ('a', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+I get this error when I try to login:
+OperationalError
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.password
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.password AS user_password 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('a', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+self.dialect.do_execute(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+cursor.execute(statement, parameters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The above exception was the direct cause of the following exception:
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 41, in login
+user = User.query.filter_by(username=username).first()
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2759, in first
+return self.limit(1)._iter().first()  # type: ignore
+       ^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2858, in _iter
+result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                              
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+return self._execute_internal(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+result: Result[Any] = compile_state_cls.orm_execute_statement(
+                      
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+result = conn.execute(
+         
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+return meth(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+return connection._execute_clauseelement(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+ret = self._execute_context(
+      
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+return self._exec_single_context(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+self._handle_dbapi_exception(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+self.dialect.do_execute(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+cursor.execute(statement, parameters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.password
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.password AS user_password
+FROM user
+WHERE user.username = ?
+LIMIT ? OFFSET ?]
+[parameters: ('a', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.
+
+Additionally, every time the user performs an action, there should be a flash message confirming it. The flash message should be green if its a sucess and red if its a fail.
+Below is an updated example that fixes the database issue and adds flash messages with colored styling. The error about "no such column: user.password" is likely because your existing SQLite database was created before you added the password field. To resolve this, delete or rename your existing stories.db file (or use proper migrations) so that the new schema—now including the password column—is created.
+
+Below are the updated code examples:
+
+
+__init__.py
+v5
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 2 repositories
+
+templates/base.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+Explanation:
+
+The init.py file now sets flash messages with a category ("success" or "error"), and the flash messages are displayed in the base.html template.
+If you encounter the "no such column: user.password" error, delete your existing stories.db file so that the new schema (which now includes the "password" column) can be created on the next run.
+The login container in base.html appears on every page, showing either a login form with a register button or a greeting with a logout button based on the user's authentication status.
+This update should resolve your errors and meet the additional requirements.
+
+I still get this error when trying to register:
+OperationalError
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.password
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.password AS user_password 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('a', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+self.dialect.do_execute(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+cursor.execute(statement, parameters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The above exception was the direct cause of the following exception:
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 63, in register
+if User.query.filter_by(username=username).first():
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2759, in first
+return self.limit(1)._iter().first()  # type: ignore
+       ^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2858, in _iter
+result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                              
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+return self._execute_internal(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+result: Result[Any] = compile_state_cls.orm_execute_statement(
+                      
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+result = conn.execute(
+         
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+return meth(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+return connection._execute_clauseelement(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1638, in _execute_clauseelement
+ret = self._execute_context(
+      
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1843, in _execute_context
+return self._exec_single_context(
+       
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1983, in _exec_single_context
+self._handle_dbapi_exception(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2352, in _handle_dbapi_exception
+raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1964, in _exec_single_context
+self.dialect.do_execute(
+^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 942, in do_execute
+cursor.execute(statement, parameters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.password
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.password AS user_password
+FROM user
+WHERE user.username = ?
+LIMIT ? OFFSET ?]
+[parameters: ('a', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+The error occurs because your existing SQLite database was created before you added the password field to the User model. In other words, your database schema is out of sync with your current models.
+
+To fix this issue, you have a couple of options:
+
+Delete (or rename) the existing "stories.db" file so that when you run your application again, Flask-SQLAlchemy will create a new database with the updated schema.
+
+Use a migration tool such as Flask-Migrate (which is a wrapper around Alembic) to handle schema changes incrementally. This is the recommended approach for production applications.
+
+Below is an example using the first approach:
+
 bash
+# Stop your app, then remove the current database:
+rm stories.db
+Then start your application again. This will re-create the database with the updated fields (including user.password).
 
-pip install flask flask_sqlalchemy flask_migrate flask_login flask_wtf
+For future development, consider adding Flask-Migrate to your project for handling database schema upgrades without data loss.
 
-Public code references from 6 repositories
+Below is an updated reminder of the init.py file (formatted as a markdown code block) that includes the current models and instructions:
 
-Save the dependencies to requirements.txt:
-bash
 
-pip freeze > requirements.txt
+__init__.py
+v6
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-Set up the database:
-bash
+app = Flask(__name__)
+ Public code references from 2 repositories
+And ensure your base.html displays flash messages:
 
-flask db init
-flask db migrate -m "Initial migration."
-flask db upgrade
 
-Public code references from 7 repositories
+templates/base.html
+v4
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+ Public code references from 1 repository
+Once you remove the old database (or migrate it), this error should be resolved.
 
-Run the application:
-bash
+flash messages should fade away after 3-5 seconds, whatever you feel is the right amount of time. Now for the main pages. On the home page, there should be a button to create new stories. When a user clicks on it, they are brought to an editing window where they can create a story. There are 2 input textboxes: 1 for the title, and 1 for the content. Users must be logged in to create a story. Once a story is created, it will appear on the relevant pages. Homepage has all stories, stories in progress contain incomplete stories, contribtions contains the stories the user has contributed to, and completed has completed stories. Stories will appear as a preview, which is a small container containing the title of the story and a couple of sentences from the last edit (cap it at maybe like 2 lines worth of content then follow with '...') When users click on the preview, they are able to view the entire last edit of the story, unless they have already contributed to the story in which case they can view the whole thing. Each user can only edit each story once. In the preview container and also when the user is viewing the last edit, there should be a contribute button that essentially lets users contribute to the story. When they click on that button, they will be brought to an edit window similar to creating new stories, with the exception that they can only add new content. Old content cannot be changed. While in this window, they can see the last edit for context for the user's contribution. Underneath the input textbox, there will be a button to toggle on whether or not to complete the story, essentially closing/ending it and not allowing it to be further edited. There will also be a submit button next to it to submit changes. All changes should be saved in the database, the structure can be whatever format you see fit.
+Below is an updated example of your Flask app with the added functionality. This example now includes the following:
 
-    flask run
+• A login container on every page that shows flash messages which fade away after about 4 seconds.
+• A home page with a “Create New Story” button.
+• A route (/create_story) where logged‑in users can create a new story by specifying a title and initial content.
+• A story detail page (/story/<story_id>): if the story is completed or if the user has already contributed to it, they see the full last edit; otherwise, they see a truncated preview (approximately 2 lines) with an option/button to “Contribute.”
+• A contribution route (/contribute/<story_id>) where logged‑in users (who haven’t yet contributed to that story) can add new content (and optionally complete the story).
+• Flash messages that appear in a colored container (green for success, red for error) and automatically fade away after roughly 4 seconds.
 
-Now you have a basic Flask application for a story blog website. You can access the application at http://127.0.0.1:5000/ and start adding stories and edits.
+Remember to delete your existing “stories.db” file (or use migrations) so that the updated schema (and any new fields) are created.
+
+Below are the file examples:
+
+
+__init__.py
+v7
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 2 repositories
+
+templates/base.html
+v5
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+ Public code references from 1 repository
+
+templates/home.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Story Blog</title>
+
+templates/create_story.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Story</title>
+
+templates/story_detail.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ story.title }} - Story Detail</title>
+
+templates/contribute_story.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contribute to {{ story.title }}</title>
+
+templates/register.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Story Blog</title>
+This complete framework uses a combination of Python routes and HTML templates to meet the desired functionality. Adjust the CSS or JavaScript as needed for your styling requirements.
+
+Once a story is completed, the full story is availible for everyone to see once they click on the view button. Also right now you only have the homepage setup. For the stories in progress page, display stories there are not yet completed and the user can still make edits to. For the completed stories page, display only completed stories. For the contributions page, only display stories the user has contributed to. Also if a user has contributed to a story, they are able to view the full edit history when they click on the view window.
+
+__init__.py
+v8
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+
+templates/home.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Story Blog</title>
+
+templates/stories_in_progress.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stories In Progress - Story Blog</title>
+
+templates/completed_stories.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completed Stories - Story Blog</title>
+
+templates/contributions.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Contributions - Story Blog</title>
+
+templates/story_detail.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+
+templates/story_history.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Edit History</title>
+update the navbar so that when I click on the link it actually reroutes me to that page. Also for completed stories, there should only be one view option that combines all the text into 1 seamless story. No timestamps are needed when viewing a completed story. Each entry should be seperated by a newline. Spaces, tabs, returns in the original edit should be preserved. For example, if there were 3 edits made that were "a", "b", "c", the view page would display them as:
+"a
+
+b
+
+c"
+2/2
+2/2
+Below are the updated code examples. In these changes:
+
+• The navbar has been updated so that each link uses url_for to route you to the appropriate page (home, in-progress, completed, and contributions).
+• For completed stories, a new route (completed_story_view) has been added. This route takes all edits (ordered by timestamp) and combines them into one seamless string separated by two newlines, preserving the original formatting (spaces, tabs, returns). No timestamps are shown.
+• The completed stories page now shows only one "View" button per story that routes to the completed_story_view.
+
+Below are the changes:
+
+
+__init__.py
+v9
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+
+templates/base.html
+v6
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+ Public code references from 1 repository
+
+templates/completed_stories.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completed Stories - Story Blog</title>
+
+templates/completed_story_view.html
+v1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Story</title>
+Other template files (such as home.html, stories_in_progress.html, contribute_story.html, story_detail.html, story_history.html, create_story.html, and register.html) remain as before (with the updated routing and navbar links via base.html).
+
+These updates ensure the navbar links route correctly, and completed stories are displayed as one seamless story with edits combined and separated by newlines without timestamps.
+
+Once the user clicks on the view button to go into the viewing window, they should be able to view the entire last edit. Flashing messages should not push down the main body content, it should just kind of hover then disappear. Also once an edit/new story is created, bring the user back to the homepage. 
+Below are the updated code examples. The changes include:
+
+• In the viewing window (both for story_detail and for completed_story_view), the user now sees the entire last edit (or all edits combined for completed stories).
+• Flash messages are now placed as fixed (hovering) messages so they do not push down the main content.
+• After creating a new story or editing (contributing) to a story, the user is redirected back to the home page.
+
+Below are the updated files:
+
+
+__init__.py
+v10
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+
+templates/base.html
+v7
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+ Public code references from 1 repository
+In these updates:
+• The navbar links now use url_for to reroute correctly.
+• In the completed story view, all edits are joined with two newlines separating them (preserving spaces, tabs, and returns thanks to the "white-space: pre-wrap" style).
+• After creating or editing a story, the application redirects back to the homepage.
+• The flash messages are contained within a fixed container at the top center so that they hover and do not shift down the layout.
+
+Feel free to further adjust the CSS as needed.
+
+The contributions page gives this error when I make an edit then try to go there:
+BuildError
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'story_history' with values ['story_id']. Did you mean 'story_detail' instead?
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask_login/utils.py", line 290, in decorated_view
+return current_app.ensure_sync(func)(*args, **kwargs)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 175, in contributions
+return render_template('contributions.html', stories=stories)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 147, in render_template
+return _render(app, template, context)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 130, in _render
+rv = template.render(context)
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+self.environment.handle_exception()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+raise rewrite_traceback_stack(source=source)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/templates/contributions.html", line 8, in top-level template code
+{% extends "base.html" %}
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/templates/base.html", line 90, in top-level template code
+{% block content %}{% endblock %}
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/templates/contributions.html", line 22, in block 'content'
+<a href="{{ url_for('story_history', story_id=story.id) }}"><button>View Full History</button></a>
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2031, in url_for
+return self.handle_url_build_error(error, endpoint, values)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2020, in url_for
+rv = url_adapter.build(  # type: ignore[union-attr]
+     
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 917, in build
+raise BuildError(endpoint, values, method, self)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'story_history' with values ['story_id']. Did you mean 'story_detail' instead?
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.
+
+I get this error when I try to view a story I've edited:
+BuildError
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'story_history' with values ['story_id']. Did you mean 'story_detail' instead?
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 119, in story_detail
+return render_template('story_detail.html', story=story, last_edit=last_edit, display_content=display_content, has_contributed=has_contributed)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 147, in render_template
+return _render(app, template, context)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 130, in _render
+rv = template.render(context)
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1295, in render
+self.environment.handle_exception()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 942, in handle_exception
+raise rewrite_traceback_stack(source=source)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/templates/story_detail.html", line 8, in top-level template code
+{% extends "base.html" %}
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/templates/base.html", line 90, in top-level template code
+{% block content %}{% endblock %}
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/templates/story_detail.html", line 19, in block 'content'
+<a href="{{ url_for('story_history', story_id=story.id) }}"><button>View Full History</button></a>
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2031, in url_for
+return self.handle_url_build_error(error, endpoint, values)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2020, in url_for
+rv = url_adapter.build(  # type: ignore[union-attr]
+     
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/werkzeug/routing/map.py", line 917, in build
+raise BuildError(endpoint, values, method, self)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'story_history' with values ['story_id']. Did you mean 'story_detail' instead?
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.
+
+Also the view window is still incorrect. The view window on the main page when it is a list is currently correct where its a snippet of the last edit, but once yuo go that that story's specific view page you should be ale to view the entire previous edit.
+Below are the updated code examples. In this update we have:
+
+• Renamed the full history route endpoint from "story_history" to "edit_history" so that url_for calls can be resolved correctly in both the contributions and story detail pages.
+• Updated the story detail view so that once a user clicks the view button, they always see the entire last edit (with no snippet truncation).
+• After creating a new story or contributing, the user is redirected back to the homepage.
+• The flash messages now hover in a fixed container (so they won't push down the main content).
+
+Below are the updated files:
+
+
+__init__.py
+v11
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+
+templates/base.html
+v8
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story Blog</title>
+ Public code references from 1 repository
+
+templates/contributions.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Contributions - Story Blog</title>
+ Public code references from 1 repository
+
+templates/story_detail.html
+v3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Story Detail</title>
+ Public code references from 1 repository
+
+templates/completed_story_view.html
+v2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Story</title>
+ Public code references from 1 repository
+In summary:
+
+The full history route is now available as the endpoint "edit_history" (accessed via /story/<story_id>/history).
+Both the contributions and story detail pages use url_for('edit_history', story_id=story.id) for the "View Full History" button.
+The story detail page now always displays the entire last edit (so users get the full context when viewing a story).
+After creating a new story or contributing an edit, the user is redirected back to the home page.
+Flash messages are displayed in a fixed, hovering container.
+Feel free to adjust the styling further as desired.
+
+Perfect! Now some final additions: once a story is completed, when someone views the whole story, display the contributors at the end. For example:
+"Contributors: a, b, c, d"
+And add some styling! Be creative! I want it to have some sort of story theme behind its design.
+Below are the updated code examples.
+
+We've added the following final features:
+
+When a story is completed and viewed (via the "completed_story_view" route), the full story is displayed along with a list of distinct contributors appended at the end (e.g., "Contributors: a, b, c, d").
+Creative styling has been added to the completed story view to evoke a story theme (including a parchment-like background, a serif font, and some decorative touches).
+Make sure to update your init.py file and the completed_story_view.html template accordingly.
+
+
+__init__.py
+v12
+from flask import Flask, render_template, redirect, url_for, request, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+ Public code references from 3 repositories
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ story.title }} - Full Story</title>
+  <style>
+    body {
+      background: #fdf6e3 url("https://www.transparenttextures.com/patterns/old-mathematics.png") repeat;
+      font-family: 'Merriweather', serif;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    .story-container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 30px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .story-text {
+      white-space: pre-wrap;
+      line-height: 1.6em;
+      font-size: 1.2em;
+    }
+    .contributors {
+      margin-top: 30px;
+      font-style: italic;
+      text-align: right;
+      font-size: 1em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="story-container">
+    <h1>{{ story.title }}</h1>
+    <div class="story-text">
+      {{ full_text }}
+    </div>
+    <div class="contributors">
+      Contributors: {{ contributors }}
+    </div>
+  </div>
+</body>
+</html>
+In summary:
+
+The completed_story_view route now gathers a distinct list of contributor usernames and passes them to the template.
+The template (completed_story_view.html) displays the full story (all edits combined with two newlines in between), followed by a styled "Contributors" section.
+Creative styling has been added to evoke a story theme (using a parchment-like background, a serif font, a centered title with a border, and a neat layout).
+Feel free to adjust the artwork, color scheme, and fonts to match your envisioned story theme!
+
+when trying to view the history a story, I also get this error:
+TemplateNotFound
+jinja2.exceptions.TemplateNotFound: edit_history.html
+
+Traceback (most recent call last)
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2548, in __call__
+return self.wsgi_app(environ, start_response)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2528, in wsgi_app
+response = self.handle_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 2525, in wsgi_app
+response = self.full_dispatch_request()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1822, in full_dispatch_request
+rv = self.handle_user_exception(e)
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1820, in full_dispatch_request
+rv = self.dispatch_request()
+     ^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/app.py", line 1796, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/app/__init__.py", line 126, in edit_history
+return render_template('edit_history.html', story=story, edits=edits)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 146, in render_template
+template = app.jinja_env.get_or_select_template(template_name_or_list)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1087, in get_or_select_template
+return self.get_template(template_name_or_list, parent, globals)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 1016, in get_template
+return self._load_template(name, globals)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/environment.py", line 975, in _load_template
+template = self.loader.load(self, name, self.make_globals(globals))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/jinja2/loaders.py", line 126, in load
+source, filename, uptodate = self.get_source(environment, name)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 62, in get_source
+return self._get_source_fast(environment, template)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File "/mnt/c/Users/stanl/Desktop/School Stuff/SoftDev-Work/k35/venv/lib/python3.12/site-packages/flask/templating.py", line 98, in _get_source_fast
+raise TemplateNotFound(template)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateNotFound: edit_history.html
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.
+Below is an example of the missing template file. Add a file named "edit_history.html" in your templates folder with the following contents:
+
+
+templates/edit_history.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ story.title }} - Edit History</title>
+After adding this file to your templates folder, the error should be resolved.
