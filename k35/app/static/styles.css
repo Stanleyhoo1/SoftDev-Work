@@ -1,10 +1,10 @@
-/* Global Styles and Story-Themed Background */
+/* Global Styles and Magical Nature-Themed Background */
 body {
-  background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), #fdf6e3;
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png"), #faf3e0;
   background-size: cover;
   margin: 0;
   padding: 20px;
-  font-family: 'Merriweather', serif;
+  font-family: "Merriweather", serif;
   color: #333;
 }
 
@@ -12,12 +12,11 @@ body {
 nav {
   text-align: center;
   margin-bottom: 20px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 nav a {
   color: #5a381e;
   text-decoration: none;
@@ -26,7 +25,6 @@ nav a {
   border-radius: 4px;
   transition: background 0.3s;
 }
-
 nav a:hover {
   background: #e3c9b6;
 }
@@ -39,7 +37,6 @@ nav a:hover {
   transform: translateX(-50%);
   z-index: 1000;
 }
-
 .flash-message {
   padding: 10px 15px;
   margin: 5px;
@@ -47,12 +44,10 @@ nav a:hover {
   opacity: 1;
   transition: opacity 1s ease-out;
 }
-
 .flash-message.success {
   background-color: #d4edda;
   color: #155724;
 }
-
 .flash-message.error {
   background-color: #f8d7da;
   color: #721c24;
@@ -63,10 +58,10 @@ nav a:hover {
   position: fixed;
   top: 15px;
   right: 15px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Button Styling */
@@ -81,24 +76,30 @@ nav a:hover {
   transition: background 0.3s, transform 0.2s;
   font-family: inherit;
 }
-
 .btn:hover {
   background: #a67c52;
   transform: scale(1.05);
 }
+.btn:disabled,
+button[disabled] {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
 
-/* Card / View Window Styling */
+/* Card / View Window Styling with Magical Nature Theme (Vine/Branch Border) */
 .card {
   background: #fff;
   border: 2px solid #c1a173;
-  border-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png') 30 round;
+  border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png")
+    30 round;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   padding: 20px;
   margin-bottom: 20px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -111,11 +112,11 @@ nav a:hover {
   padding: 30px;
   background: #fff;
   border: 2px solid #c1a173;
-  border-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png') 30 round;
+  border-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png")
+    30 round;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
-
 .completed-story h1 {
   text-align: center;
   font-size: 2.5em;
@@ -123,13 +124,11 @@ nav a:hover {
   border-bottom: 2px solid #ccc;
   padding-bottom: 10px;
 }
-
 .completed-story .story-text {
   white-space: pre-wrap;
   line-height: 1.6em;
   font-size: 1.2em;
 }
-
 .completed-story .contributors {
   margin-top: 30px;
   font-style: italic;
@@ -146,33 +145,46 @@ nav a:hover {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 .history-container h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-
 .edit {
   border-bottom: 1px solid #ddd;
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
-
 .edit:last-child {
   border-bottom: none;
   margin-bottom: 0;
 }
-
 .timestamp {
   font-size: 0.9em;
   color: #888;
   margin-bottom: 5px;
 }
-
 .content {
   white-space: pre-wrap;
   font-size: 1.1em;
   line-height: 1.5em;
+}
+.back-button {
+  display: block;
+  width: 200px;
+  margin: 20px auto;
+  padding: 10px 15px;
+  background: #8c6a43;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.back-button:hover {
+  background: #a67c52;
+  transform: scale(1.05);
 }

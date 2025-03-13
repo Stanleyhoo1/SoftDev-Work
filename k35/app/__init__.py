@@ -40,6 +40,11 @@ def has_contributed(story, user):
         return False
     return Edit.query.filter_by(story_id=story.id, user_id=user.id).first() is not None
 
+# Inject helper functions into all templates
+@app.context_processor
+def inject_helpers():
+    return dict(has_contributed=has_contributed)
+
 # ----------------------
 # Authentication Routes
 # ----------------------
@@ -83,7 +88,7 @@ def register():
 @app.route('/')
 def home():
     stories = Story.query.all()
-    return render_template('home.html', stories=stories, has_contributed=has_contributed)
+    return render_template('home.html', stories=stories)
 
 @app.route('/create_story', methods=['GET', 'POST'])
 @login_required
@@ -108,9 +113,8 @@ def create_story():
 def story_detail(story_id):
     story = Story.query.get_or_404(story_id)
     last_edit = Edit.query.filter_by(story_id=story.id).order_by(Edit.timestamp.desc()).first()
-    # Always display the full last edit when viewing an individual story.
     display_content = last_edit.content if last_edit else ""
-    return render_template('story_detail.html', story=story, last_edit=last_edit, display_content=display_content, has_contributed=has_contributed)
+    return render_template('story_detail.html', story=story, last_edit=last_edit, display_content=display_content)
 
 @app.route('/story/<int:story_id>/history')
 def edit_history(story_id):
@@ -129,7 +133,6 @@ def completed_story_view(story_id):
         return redirect(url_for('story_detail', story_id=story_id))
     edits = Edit.query.filter_by(story_id=story.id).order_by(Edit.timestamp).all()
     full_text = "\n\n".join([edit.content for edit in edits])
-    # Get a distinct list of contributor usernames for this story.
     contributors_query = db.session.query(User.username).join(Edit).filter(Edit.story_id == story.id).distinct().all()
     contributors = ", ".join([row[0] for row in contributors_query])
     return render_template('completed_story_view.html', story=story, full_text=full_text, contributors=contributors)
@@ -157,10 +160,10 @@ def contribute_story(story_id):
         return redirect(url_for('home'))
     return render_template('contribute_story.html', story=story, last_edit=last_edit)
 
-@app.route('/in-progress')
+@app.route('/in_progress')
 def in_progress():
     stories = Story.query.filter(Story.status != 'completed').all()
-    return render_template('stories_in_progress.html', stories=stories, has_contributed=has_contributed)
+    return render_template('in_progress.html', stories=stories)
 
 @app.route('/completed')
 def completed():

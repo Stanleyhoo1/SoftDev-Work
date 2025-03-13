@@ -5,12 +5,17 @@
   <title>{{ story.title }} - Full Story</title>
 </head>
 <body>
-{% extends "base.html" %}
-{% block content %}
-  <h1>{{ story.title }}</h1>
-  <div style="white-space: pre-wrap; border:1px solid #ccc; padding:10px;">
-    {{ full_text }}
-  </div>
-{% endblock %}
+  {% extends "base.html" %}
+  {% block content %}
+    <div class="completed-story">
+      <h1>{{ story.title }}</h1>
+      <div class="story-text">
+        {{ full_text }}
+      </div>
+      <div class="contributors">
+        Contributors: {{ contributors }}
+      </div>
+    </div>
+  {% endblock %}
 </body>
 </html>

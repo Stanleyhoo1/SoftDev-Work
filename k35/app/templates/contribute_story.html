@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Contribute to {{ story.title }}</title>
+  <meta charset="UTF-8">
+  <title>Contribute to {{ story.title }}</title>
 </head>
 <body>
-    {% extends "base.html" %}
-    {% block content %}
-    <h1>Contribute to: {{ story.title }}</h1>
-    <div style="border:1px solid #ccc; padding:10px;">
+  {% extends "base.html" %}
+  {% block content %}
+    <div class="card">
+      <h1>Contribute to: {{ story.title }}</h1>
+      <div style="border:1px solid #ccc; padding:10px;">
         <h3>Last Edit (for context):</h3>
         <p>{{ last_edit.content if last_edit else "No previous content." }}</p>
-    </div>
-    <form method="POST" action="{{ url_for('contribute_story', story_id=story.id) }}">
+      </div>
+      <form method="POST" action="{{ url_for('contribute_story', story_id=story.id) }}">
         <label for="new_content">Your Contribution:</label><br>
         <textarea name="new_content" rows="10" cols="50" required></textarea><br><br>
         <label for="complete_story">Complete Story? (toggle if yes)</label>
         <input type="checkbox" name="complete_story"><br><br>
-        <button type="submit">Submit Contribution</button>
-    </form>
-    {% endblock %}
+        <button type="submit" class="btn">Submit Contribution</button>
+      </form>
+    </div>
+  {% endblock %}
 </body>
 </html>

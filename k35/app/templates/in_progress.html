@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Contributions - Story Blog</title>
+  <title>Stories In Progress - Story Blog</title>
 </head>
 <body>
 {% extends "base.html" %}
 {% block content %}
-  <h1>Your Contributions</h1>
+  <h1>Stories In Progress</h1>
   <div>
     {% for story in stories %}
       <div class="card">
         <h2>{{ story.title }}</h2>
         {% set last_edit = story.edits|sort(attribute='timestamp', reverse=true)|first %}
         {% if last_edit %}
-          <p>{{ last_edit.content }}</p>
+          {% if has_contributed(story, current_user) %}
+            <p>{{ last_edit.content }}</p>
+          {% else %}
+            <p>{{ last_edit.content[:150] ~ ('...' if last_edit.content|length > 150 else '') }}</p>
+          {% endif %}
         {% else %}
-          <p>No content available.</p>
+          <p>No content yet.</p>
         {% endif %}
         <a href="{{ url_for('story_detail', story_id=story.id) }}"><button class="btn">View</button></a>
         {% if current_user.is_authenticated %}

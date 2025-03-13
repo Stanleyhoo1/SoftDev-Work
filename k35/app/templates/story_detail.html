@@ -5,20 +5,26 @@
   <title>{{ story.title }} - Story Detail</title>
 </head>
 <body>
-{% extends "base.html" %}
-{% block content %}
-  <h1>{{ story.title }}</h1>
-  <div style="border:1px solid #ccc; padding:10px;">
-      <h3>Last Edit:</h3>
-      <p>{{ display_content }}</p>
-  </div>
-  {% if current_user.is_authenticated %}
-      {% if not has_contributed(story, current_user) and story.status != 'completed' %}
-          <a href="{{ url_for('contribute_story', story_id=story.id) }}"><button>Contribute</button></a>
-      {% else %}
-          <a href="{{ url_for('edit_history', story_id=story.id) }}"><button>View Full History</button></a>
+  {% extends "base.html" %}
+  {% block content %}
+    <div class="card">
+      <h1>{{ story.title }}</h1>
+      <div style="border:1px solid #ccc; padding:10px;">
+        <h3>Last Edit:</h3>
+        <p>{{ display_content }}</p>
+      </div>
+      {% if current_user.is_authenticated %}
+        {% if story.status == 'completed' %}
+          <button class="btn" disabled>Contribute</button>
+          <a href="{{ url_for('edit_history', story_id=story.id) }}"><button class="btn">View Full History</button></a>
+        {% elif not has_contributed(story, current_user) %}
+          <a href="{{ url_for('contribute_story', story_id=story.id) }}"><button class="btn">Contribute</button></a>
+        {% else %}
+          <button class="btn" disabled>Contribute</button>
+          <a href="{{ url_for('edit_history', story_id=story.id) }}"><button class="btn">View Full History</button></a>
+        {% endif %}
       {% endif %}
-  {% endif %}
-{% endblock %}
+    </div>
+  {% endblock %}
 </body>
 </html>

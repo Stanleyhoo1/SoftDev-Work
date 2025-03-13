@@ -5,39 +5,41 @@
   <title>Home - Story Blog</title>
 </head>
 <body>
-{% extends "base.html" %}
-{% block content %}
-  <h1>All Stories</h1>
-  {% if current_user.is_authenticated %}
-    <a href="{{ url_for('create_story') }}"><button>Create New Story</button></a>
-  {% else %}
-    <p>You must be logged in to create a new story.</p>
-  {% endif %}
-  <div>
-    {% for story in stories %}
-      <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-         <h2>{{ story.title }}</h2>
-         {% set last_edit = story.edits|sort(attribute='timestamp', reverse=true)|first %}
-         {% if last_edit %}
-           {% if story.status == 'completed' or has_contributed(story, current_user) %}
-             <p>{{ last_edit.content }}</p>
-           {% else %}
-             <p>{{ last_edit.content[:150] ~ ('...' if last_edit.content|length > 150 else '') }}</p>
-           {% endif %}
-         {% else %}
-           <p>No content yet.</p>
-         {% endif %}
-         <a href="{{ url_for('story_detail', story_id=story.id) }}"><button>View</button></a>
-         {% if current_user.is_authenticated %}
-           {% if not has_contributed(story, current_user) and story.status != 'completed' %}
-             <a href="{{ url_for('contribute_story', story_id=story.id) }}"><button>Contribute</button></a>
-           {% else %}
-             <button disabled>Contribute</button>
-           {% endif %}
-         {% endif %}
-      </div>
-    {% endfor %}
-  </div>
-{% endblock %}
+  {% extends "base.html" %}
+  {% block content %}
+    <h1>All Stories</h1>
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('create_story') }}"><button class="btn">Create New Story</button></a>
+    {% else %}
+      <p>You must be logged in to create a new story.</p>
+    {% endif %}
+    <div>
+      {% for story in stories %}
+        <div class="card">
+          <h2>{{ story.title }}</h2>
+          {% set last_edit = story.edits|sort(attribute='timestamp', reverse=true)|first %}
+          {% if last_edit %}
+            {% if story.status == 'completed' or has_contributed(story, current_user) %}
+              <p>{{ last_edit.content }}</p>
+            {% else %}
+              <p>{{ last_edit.content[:150] ~ ('...' if last_edit.content|length > 150 else '') }}</p>
+            {% endif %}
+          {% else %}
+            <p>No content yet.</p>
+          {% endif %}
+          <a href="{{ url_for('story_detail', story_id=story.id) }}"><button class="btn">View</button></a>
+          {% if current_user.is_authenticated %}
+            {% if story.status == 'completed' %}
+              <button class="btn" disabled>Contribute</button>
+            {% elif not has_contributed(story, current_user) %}
+              <a href="{{ url_for('contribute_story', story_id=story.id) }}"><button class="btn">Contribute</button></a>
+            {% else %}
+              <button class="btn" disabled>Contribute</button>
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endblock %}
 </body>
 </html>
