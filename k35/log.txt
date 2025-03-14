@@ -1,5 +1,5 @@
 # Stanley Hoo
-# Master Oogway
+# Master_Oogway
 # SoftDev
 # K35: Now Again For The First Time
 # 2025-03-13
@@ -20,4 +20,5 @@ It is quite similar, I gave it very specific instructions and in my opinion it a
 C: Tried to use sqlalchemy instead of sqlite
 C: originally tried to run site using some app commands, had to specify to use __init__ as main run file.
 C: Many times I saw that the code was referenced from another repo on GitHub
-C: Can't upload files or images, only repos
+C: Can't upload files or images on local device, only repos
+C: Returned broken code when given large, complex prompts
