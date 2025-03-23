@@ -1,0 +1,26 @@
+# Stanley Hoo, Alex Luo, Tahmim Hassan, Leon Huang
+# RetiredSubmariners+
+# SoftDev
+# K37: Are You Being Served?
+# 2025-3-20
+# Time spent: 4h
+
+Notes:
+	- uWSGI: A WSGI application server used to serve Python applications in production.
+	- Nginx: Used as a reverse proxy to forward HTTP requests to uWSGI.
+	- Flask: Lightweight Python web framework used to create the application.
+	- Python Virtual Environments (venv): Isolates Python dependencies per project.
+	- Systemd: Manages services on Ubuntu; used to keep the app running after reboots.
+	- Certbot with Let’s Encrypt: Used to generate and install free SSL certificates.
+	- UFW (Uncomplicated Firewall): Ubuntu’s firewall utility; configured to allow/deny ports.
+	- Unix socket over network port: Used for uWSGI-Nginx communication because it is faster and more secure (mentioned explicitly).
+	- Group ownership (www-data): Required so Nginx can access the uWSGI socket file.
+	- chmod-socket = 660: Ensures correct read/write permissions for the socket.
+	- vacuum = true: uWSGI will clean up the socket file when the process stops.
+	- die-on-term = true: Aligns how systemd and uWSGI handle termination signals.
+	- Firewall updates: Port 5000 is allowed for development, then disabled when using Nginx.
+	- Creating a wsgi.py file: Serves as the application’s entry point for uWSGI.
+	- Using .ini file for uWSGI: Centralizes uWSGI configuration for stability and repeatable service management.
+	- Systemd unit file: Enables the app to start automatically at boot and run as a managed service.
+	- Nginx sites-available and sites-enabled: Follows standard Debian-based configuration practice.
+	- Certbot Nginx plugin: Automatically updates Nginx config and reloads it when setting up HTTPS.

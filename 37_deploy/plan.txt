@@ -1,0 +1,13 @@
+# Stanley Hoo, Alex Luo, Tahmim Hassan, Leon Huang
+# RetiredSubmariners+
+# SoftDev
+# K37: Are You Being Served?
+# 2025-3-20
+# Time spent: 4h
+
+Plan:
+1. Complete steps 1-6 first of the DigitalOcean tutorial to get the Flask app running on the IP first.
+2. Follow the steps on PM TH's VM with DSH taking notes.
+3. Repeat for other Devos.
+4. Provision domain names (DSH, DSM, PMTH).
+5. Secure our domains.
