@@ -22,4 +22,3 @@ C: originally tried to run site using some app commands, had to specify to use _
 C: Many times I saw that the code was referenced from another repo on GitHub
 C: Can't upload files or images on local device, only repos
 C: Returned broken code when given large, complex prompts
-C: Code files aren't saved in editor when reloading page, files are only given again when edited
