@@ -24,3 +24,4 @@ Notes:
 	- Systemd unit file: Enables the app to start automatically at boot and run as a managed service.
 	- Nginx sites-available and sites-enabled: Follows standard Debian-based configuration practice.
 	- Certbot Nginx plugin: Automatically updates Nginx config and reloads it when setting up HTTPS.
+	- Certbot didn't work at first, had to edit /etc/nginx/sites-available/default and change the server_name to my domain name
